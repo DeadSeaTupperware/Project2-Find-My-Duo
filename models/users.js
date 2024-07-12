@@ -65,6 +65,19 @@ User.init(
           return err;
         }
       },
+      beforeUpdate: async (updatedUserData) => {
+        // hash the password before updating a user
+        try {
+          updatedUserData.password = await bcrypt.hash(
+            updatedUserData.password,
+            10
+          );
+          return updatedUserData;
+        } catch (err) {
+          console.log(err);
+          return err;
+        }
+      },
     },
     sequelize, // import connection
     timestamps: false,
