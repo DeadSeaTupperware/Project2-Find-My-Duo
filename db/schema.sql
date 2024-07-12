@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS FindMyDuo_db;
+
+CREATE DATABASE FindMyDuo_db;
