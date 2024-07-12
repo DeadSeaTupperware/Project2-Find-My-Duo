@@ -45,6 +45,13 @@ User.init(
         len: [8],
       },
     },
+    emergency_key: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [8],
+      },
+    },
   },
   {
     hooks: {
