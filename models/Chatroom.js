@@ -31,6 +31,21 @@ Chatroom.init(
     },
   },
   {
+    hooks: {
+      beforeCreate: async (newChatroom) => {
+        // hash the password before creating a new chatroom
+        try {
+          newChatroom.chatroom_password = await bcrypt.hash(
+            newChatroom.chatroom_password,
+            10
+          );
+          return newChatroom;
+        } catch (err) {
+          console.log(err);
+          return err;
+        }
+      },
+    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
