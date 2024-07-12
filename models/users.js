@@ -47,11 +47,16 @@ User.init(
     },
   },
   {
-    // hash password before creating user
     hooks: {
-      async beforeCreate(newUserData) {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        return newUserData;
+      beforeCreate: async (newUserData) => {
+        // hash the password before creating a new user
+        try {
+          newUserData.password = await bcrypt.hash(newUserData.password, 10);
+          return newUserData;
+        } catch (err) {
+          console.log(err);
+          return err;
+        }
       },
     },
     sequelize, // import connection
