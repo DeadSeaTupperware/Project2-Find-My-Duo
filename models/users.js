@@ -55,24 +55,23 @@ User.init(
   },
   {
     hooks: {
-      beforeCreate: async (newUserData) => {
+      beforeCreate: async (newUser) => {
         // hash the password before creating a new user
         try {
-          newUserData.password = await bcrypt.hash(newUserData.password, 10);
-          return newUserData;
+          newUser.password = await bcrypt.hash(newUser.password, 10);
+          newUser.emergency_key = await bcrypt.hash(newUser.emergency_key, 10);
+          return newUser;
         } catch (err) {
           console.log(err);
           return err;
         }
       },
-      beforeUpdate: async (updatedUserData) => {
+      beforeUpdate: async (newUser) => {
         // hash the password before updating a user
         try {
-          updatedUserData.password = await bcrypt.hash(
-            updatedUserData.password,
-            10
-          );
-          return updatedUserData;
+          newUser.password = await bcrypt.hash(newUser.password, 10);
+          newUser.emergency_key = await bcrypt.hash(newUser.emergency_key, 10);
+          return newUser;
         } catch (err) {
           console.log(err);
           return err;
