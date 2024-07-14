@@ -7,7 +7,3 @@ router.use("/", homeRoutes);
 router.use("/api", apiRoutes);
 
 module.exports = router;
-
-const apiRoutes = require("./api");
-
-router.use("/api", apiRoutes);
