@@ -70,5 +70,54 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PUT (update) a user by id
+// PUT /api/users/:id
+// authentication required
+router.put("/:id", authenticate, async (req, res) => {
+  try {
+    // update user data by id
+    const user = await User.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+      individualHooks: true, // ensure the password is hashed before updating
+    });
+
+    // if no user found with this id return 404
+    if (!user) {
+      res.status(404).json({ message: "No user found with this id!" });
+      return;
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// DELETE a user by id
+// DELETE /api/users/:id
+// authentication required
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    // delete user data by id
+    const user = await User.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    // if no user found with this id return 404
+    if (!user) {
+      res.status(404).json({ message: "No user found with this id!" });
+      return;
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // exports
 module.exports = router;
