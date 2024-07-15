@@ -78,5 +78,30 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
+// DELETE a message by id
+// DELETE /api/messages/:id
+// authentication required
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    // delete a message by id
+    const messageData = await Message.destroy({
+      where: {
+        id: req.params.id,
+        sender_id: req.session.sender_id,
+      },
+    });
+
+    // if no message found with this id return 404
+    if (!messageData) {
+      res.status(404).json({ message: "No message found with this id!" });
+      return;
+    }
+
+    res.status(200).json(messageData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // export the router
 module.exports = router;
