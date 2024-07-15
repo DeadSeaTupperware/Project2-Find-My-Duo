@@ -1,8 +1,18 @@
-<h1>This is Homepage.handlebars</h1>
+{{! <h1>This is Homepage.handlebars</h1>
 <a href="/chatboard">chatboard</a>
-{{!-- {{#if loggedIn}} --}}
 <button id="logout" class="btn-no-style">Logout</button>
-{{!-- {{else}} --}}
 <a href="/login">Login</a>
 <a href="/chatboard">View chatboard of a game</a>
-<a href="/gameList">View all gameList</a>
+<a href="/gameList">View all gameList</a> }}
+
+<!-- Header -->
+<header
+  class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center"
+>
+  <div></div>
+  <!-- This empty div is a placeholder to align the header content to the right -->
+  <div>
+    <a href="/login" class="mr-4">Login</a>
+    <a href="/signup">Signup</a>
+  </div>
+</header>
