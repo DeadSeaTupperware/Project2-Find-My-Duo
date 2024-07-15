@@ -15,5 +15,20 @@ Message.belongsTo(User, { foreignKey: "sender_id" });
 Chatroom.hasMany(Message, { foreignKey: "room_id" });
 Message.belongsTo(Chatroom, { foreignKey: "room_id" });
 
+// user-game
+const UserGame = sequelize.define(
+  "usergame",
+  {},
+  {
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "usergame",
+  }
+);
+
+User.belongsToMany(Game, { through: UserGame, foreignKey: "user_id" });
+Game.belongsToMany(User, { through: UserGame, foreignKey: "game_id" });
+
 // exports
-module.exports = { User, Game, Chatroom, Message };
+module.exports = { User, Game, Chatroom, Message, UserGame };
