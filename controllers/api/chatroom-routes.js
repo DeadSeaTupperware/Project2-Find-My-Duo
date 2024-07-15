@@ -96,5 +96,29 @@ router.put("/:id", authenticate, async (req, res) => {
   }
 });
 
+// DELETE a chatroom by id
+// DELETE /api/chatrooms/:id
+// authentication required
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    // delete a chatroom by id
+    const chatroom = await Chatroom.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    // if no chatroom found with this id return 404
+    if (!chatroom) {
+      res.status(404).json({ message: "No chatroom found with this id!" });
+      return;
+    }
+
+    res.status(200).json(chatroom);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // exports
 module.exports = router;
