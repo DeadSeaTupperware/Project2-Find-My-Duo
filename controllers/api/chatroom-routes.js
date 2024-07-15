@@ -55,5 +55,46 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 
+// POST a new chatroom
+// POST /api/chatrooms
+// authentication required
+router.post("/", authenticate, async (req, res) => {
+  try {
+    // create a new chatroom with the chatroom data
+    const newChatroom = await Chatroom.create({
+      chatroom_name: req.body.chatroom_name,
+      chatroom_password: req.body.chatroom_password,
+    });
+
+    res.status(200).json(newChatroom);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// PUT (update) a chatroom by id
+// PUT /api/chatrooms/:id
+// authentication required
+router.put("/:id", authenticate, async (req, res) => {
+  try {
+    // update a chatroom by id
+    const updatedChatroom = await Chatroom.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    // if no chatroom found with this id return 404
+    if (!updatedChatroom) {
+      res.status(404).json({ message: "No chatroom found with this id!" });
+      return;
+    }
+
+    res.status(200).json(updatedChatroom);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // exports
 module.exports = router;
