@@ -30,8 +30,9 @@ router.get("/signup", async (req, res) => {
 });
 
 // GET req that finds specific game db and renders to duo finding  page of that game.
-router.get("/signup", async (req, res) => {
+router.get("/dashboard", async (req, res) => {
   try {
+    res.render("dashboard");
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
