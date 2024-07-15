@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Game = require("../../models/Game");
 
-// GET a game
+// GET all games
 router.get("/", async (req, res) => {
   const gameData = await Game.findAll();
 
@@ -37,6 +37,17 @@ router.put("/:id", async (req, res) => {
       },
     }
   );
+  return res.json(gameData);
+});
+
+// DELETE a game
+router.delete('/:id', async (req, res) => {
+  const gameData = await Game.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
+
   return res.json(gameData);
 });
 
