@@ -24,8 +24,10 @@ router.get("/", authenticate, async (req, res) => {
 // authentication required
 router.get(":/id", authenticate, async (req, res) => {
   try {
+    // get user data by id except for the password and emergency key
     const user = await User.findByPk(req.params.id, {
       attributes: { exclude: ["password", "emergency_key"] },
+      // include chatroom and game data
       include: [
         {
           model: Chatroom,
@@ -33,7 +35,7 @@ router.get(":/id", authenticate, async (req, res) => {
         },
         {
           model: Game,
-          attributes: ["id", "game_name"],
+          attributes: ["id", "title"],
         },
       ],
     });
@@ -47,6 +49,24 @@ router.get(":/id", authenticate, async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// POST a new user
+// POST /api/users
+router.post("/", async (req, res) => {
+  try {
+    // create a new user with the user data
+    const newUser = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      emergency_key: req.body.emergency_key,
+    });
+
+    res.status(200).json(newUser);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
