@@ -1,65 +1,34 @@
 // Purpose: Export all models to be used in the application.
 // variables
+const sequelize = require("../config/connection");
 const User = require("./User");
 const Game = require("./Game");
 const Chatroom = require("./Chatroom");
 const Message = require("./Message");
 
 // associations
-// user has many games
-User.hasMany(Game, {
-  // third table to store user's games
-  through: {
-    model: Game,
-    unique: false,
-  },
-  // alias for the table
-  as: "user_games",
-});
+// user-message
+User.hasMany(Message, { foreignKey: "sender_id" });
+Message.belongsTo(User, { foreignKey: "sender_id" });
 
-// game belongs to many users
-Game.belongsToMany(User, {
-  // third table to store user's games
-  through: {
-    model: Game,
-    unique: false,
-  },
-  // alias for the table
-  as: "game_users",
-});
+// chatroom-message
+Chatroom.hasMany(Message, { foreignKey: "room_id" });
+Message.belongsTo(Chatroom, { foreignKey: "room_id" });
 
-// user has many chatrooms
-User.hasMany(Chatroom, {
-  // third table to store user's chatrooms
-  through: {
-    model: Chatroom,
-    unique: false,
-  },
-  // alias for the table
-  as: "user_chatrooms",
-});
+// user-game
+const UserGame = sequelize.define(
+  "usergame",
+  {},
+  {
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "usergame",
+  }
+);
 
-// chatroom belongs to many users
-Chatroom.belongsToMany(User, {
-  // third table to store user's chatrooms
-  through: {
-    model: Chatroom,
-    unique: false,
-  },
-  // alias for the table
-  as: "chatroom_users",
-});
-
-// chatroom has many messages
-Chatroom.hasMany(Message, {
-  // third table to store chatroom's messages
-  through: {
-    model: Message,
-    unique: false,
-  },
-  // alias for the table
-  as: "chatroom_messages",
-});
+User.belongsToMany(Game, { through: UserGame, foreignKey: "user_id" });
+Game.belongsToMany(User, { through: UserGame, foreignKey: "game_id" });
 
 // exports
-module.exports = { User, Game, Chatroom, Message };
+module.exports = { User, Game, Chatroom, Message, UserGame };
