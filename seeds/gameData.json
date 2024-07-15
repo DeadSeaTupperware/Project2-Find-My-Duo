@@ -1,0 +1,20 @@
+[
+  {
+    "title": "League of Legends",
+    "release_date": "10/27/2009",
+    "description": "Multiplayer online battle arena video game developed and published by Riot Games.",
+    "cover_art": "./public/assets/images/league-of-legends.webp"
+  },
+  {
+    "title": "Valorant",
+    "release_date": "06/02/2020",
+    "description": "Free-to-play first-person tactical hero shooter developed and published by Riot Games.",
+    "cover_art": "./public/assets/images/VALORANT_RiotGames.jpeg"
+  },
+  {
+    "title": "XDefiant",
+    "release_date": "05/21/2024",
+    "description": "Free-to-play first-person shooter game developed by Ubisoft San Francisco and published by Ubisoft.",
+    "cover_art": "./public/assets/images/XDEFIANT.jpeg"
+  }
+]
