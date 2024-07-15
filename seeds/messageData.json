@@ -1,0 +1,14 @@
+[
+    {
+        "room_id": 1,
+        "sender_id": 1,
+        "message_text": "Hello!",
+        "message_timestamp": "2024-07-15T17:19:35.850Z"
+    },
+    {
+       "room_id": 2,
+        "sender_id": 2,
+        "message_text": "Hello!",
+        "message_timestamp": "2024-07-14T17:19:35.850Z" 
+    }
+]
