@@ -119,5 +119,45 @@ router.delete("/:id", authenticate, async (req, res) => {
   }
 });
 
+// POST a user login
+// POST /api/users/login
+router.post("/login", async (req, res) => {
+  try {
+    // get user data by email
+    const user = await User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+
+    // if no user found with this email return 404
+    if (!user) {
+      res.status(404).json({ message: "No user found with this email!" });
+      return;
+    }
+
+    // check if the password is correct
+    const validPassword = await user.checkPassword(req.body.password);
+
+    // if the password is incorrect return 400
+    if (!validPassword) {
+      res.status(400).json({ message: "Incorrect password!" });
+      return;
+    }
+
+    // create a session
+    req.session.save(() => {
+      // save the user id and logged in status
+      req.session.user_id = user.id;
+      req.session.logged_in = true;
+
+      // return the user data and a message
+      res.status(200).json({ user: user, message: "You are now logged in!" });
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // exports
 module.exports = router;
