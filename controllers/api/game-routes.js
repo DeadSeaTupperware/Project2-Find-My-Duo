@@ -22,3 +22,6 @@ router.post("/games", async (req, res) => {
   return res.json(gameData);
 });
 
+
+
+module.exports = router;
