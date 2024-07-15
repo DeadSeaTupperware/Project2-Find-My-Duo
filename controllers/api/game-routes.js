@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Game = require("../../models/Game");
 
+
 // GET a game
 router.get("/", async (req, res) => {
   const gameData = await Game.findAll();
@@ -22,3 +23,4 @@ router.post("/games", async (req, res) => {
   return res.json(gameData);
 });
 
+module.exports = router;
