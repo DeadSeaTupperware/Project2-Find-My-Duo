@@ -1,1 +1,30 @@
-<h1>This is a dashboard header</h1>
+<header
+  class="bg-gray-900 text-white py-4 px-8 flex items-center justify-between"
+>
+  <!-- Logo as a Link with Division Bar -->
+  <a href="/" class="flex items-center">
+    <img src="/path/to/logo.png" alt="Logo" class="w-16 h-16 mr-4" />
+    <div class="h-16 w-0.5 bg-gray-600 mx-4"></div>
+    <!-- Division Bar -->
+  </a>
+
+  <!-- Navigation -->
+  <nav class="absolute top-4 right-8 flex items-center space-x-4">
+    <a href="/gameList" class="text-white hover:text-gray-400">View All</a>
+    <a href="/login" class="text-white hover:text-gray-400">Login</a>
+    <a href="/signup" class="text-white hover:text-gray-400">Sign Up</a>
+  </nav>
+
+  <!-- Secondary Text Links -->
+  <div
+    class="md:absolute md:right-8 md:top-16 md:flex md:items-center md:justify-between md:w-3/4 md:mr-20"
+  >
+    <a href="#" class="text-white hover:text-gray-400">Link 1</a>
+    <a href="#" class="text-white hover:text-gray-400">Link 2</a>
+    <a href="#" class="text-white hover:text-gray-400">Link 3</a>
+    <a href="#" class="text-white hover:text-gray-400">Link 4</a>
+    <a href="#" class="text-white hover:text-gray-400">Link 5</a>
+    <a href="#" class="text-white hover:text-gray-400">Link 6</a>
+  </div>
+
+</header>
