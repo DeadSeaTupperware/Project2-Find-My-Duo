@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { Chatroom } = require("../../models");
 const Game = require("../../models/Game");
 
 // GET all games
@@ -10,8 +11,12 @@ router.get("/", async (req, res) => {
 
 // GET a game by ID
 router.get("/:id", async (req, res) => {
-  const gameData = await Game.findByPk(req.params.id);
+  const gameData = await Game.findByPk(req.params.id, {
+    include: [{model: Chatroom}]
+  });
 
+  
+  // res.render('gameList', {game: gameData})
   return res.json(gameData);
 });
 
@@ -50,5 +55,7 @@ router.delete("/:id", async (req, res) => {
 
   return res.json(gameData);
 });
+
+
 
 module.exports = router;
