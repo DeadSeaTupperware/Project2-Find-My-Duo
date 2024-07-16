@@ -1,0 +1,61 @@
+<a
+  href="/"
+  class="text-white px-4 py-2 border border-gray-300 absolute top-4 left-8"
+>Home</a>
+
+<div class="min-h-screen flex flex-col items-center justify-center">
+  <img src="/assets/images/FindMyDuo_logo.png" alt="Logo" class="h-32 mb-8" />
+
+  <!-- Signup Form -->
+  <form class="w-full max-w-md p-6 bg-gray-100 rounded-lg shadow-md">
+    <h2 class="font-bold text-3xl text-center text-black mb-6">
+      Create Duo Request</h2>
+    <div class="mb-4">
+      <label
+        for="nickname"
+        class="block text-gray-700 font-bold mb-2"
+      >Nickname:</label>
+      <input
+        class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        type="text"
+        id="nickname"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="rank" class="block text-gray-700 font-bold mb-2">Rank:</label>
+      <input
+        class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        type="text"
+        id="rank"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="position"
+        class="block text-gray-700 font-bold mb-2"
+      >Position:</label>
+      <input
+        class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        type="text"
+        id="position"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="comment"
+        class="block text-gray-700 font-bold mb-2"
+      >Comment:</label>
+      <textarea
+        class="form-textarea w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 h-32 resize-none"
+        id="comment"
+      ></textarea>
+    </div>
+    <div>
+      <button
+        class="btn w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
+        type="submit"
+      >Register!</button>
+    </div>
+  </form>
+</div>
+<script src="./js/signup.js"></script>
