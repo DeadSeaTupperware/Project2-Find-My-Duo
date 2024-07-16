@@ -78,6 +78,24 @@
             }
         });
 
+        // socket.io client-side script
+        const socket = io();
+
+        // joinChatroom function
+        const joinChatroom(chatroomID) {
+            socket.emit('join', chatroomID); // emit join event
+            linkBox.style.display = 'none'; // hide link box
+            chatContent.classList.remove('hidden'); // show chat content
+        };
+
+        // sendMessage function
+        const sendMessage(roomID, senderID, messageText) {
+            socket.emit('message', { roomID, senderID, messageText }); // emit message event
+        };
+
+        // get the chatroom list
+        const chatroomList = document.getElementById('chatroomList');
+        
     </script>
 
 </body>
