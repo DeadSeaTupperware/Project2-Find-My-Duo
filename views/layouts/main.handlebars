@@ -7,22 +7,28 @@
     <link rel="stylesheet" type="text/css" href="/css/output.css" />
   </head>
 
-  <body class="bg-green-100">
-    <p>This is Main Layout body</p>
-    {{{body}}}
+  <body class="bg-gray-900 text-white">
+    <header>
+
+      <nav>
+        <a href="/">Home</a>
+        {{#if loggedIn}}
+          <button id="logout" class="btn-no-style">Logout</button>
+        {{else}}
+          <a href="/login">Login</a>
+        {{/if}}
+      </nav>
+    </header>
+
+    <main>
+      {{! Render sub-layout }}
+      {{{body}}}
+    </main>
+
+    {{! Render logout script only if user is logged in }}
+    {{#if loggedIn}}
+      <script src="/js/logout.js"></script>
+    {{/if}}
   </body>
 
 </html>
-{{! 
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./output.css" rel="stylesheet" />
-  </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  </body>
-</html> }}
