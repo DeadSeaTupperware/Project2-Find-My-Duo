@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // CREATE a game
-router.post("/games", async (req, res) => {
+router.post("/", async (req, res) => {
   const gameData = await Game.create(req.body);
 
   return res.json(gameData);
