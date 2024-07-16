@@ -4,4 +4,68 @@
 {{> dashboard-header }}
 
 <h2>Body for chatboard page</h2>
-{{! Should use partial to get game ID and display chatrooms }}
+ <!DOCTYPE html>
+<html lang="en">
+
+ <!-- Toggle Chat Button -->
+    <button id="toggleChat" class=" text-white px-4 py-2 rounded-md">Toggle
+        Chat</button>
+
+<body class="bg-gray-100">
+    <header class="bg-gray-900 text-white py-4 px-8">
+        <!-- Your header content here -->
+        <h1>Header</h1>
+    </header>
+
+    <div class="flex gap-4 p-4">
+        <!-- Chatroom Section -->
+        <div id="chatSection" class="w-1/5 h-screen bg-gray-200 border border-gray-300 p-4">
+            <!-- Chatroom Content (Hidden by Default) -->
+            <div id="chatContent" class="hidden h-full overflow-y-auto">
+                <!-- Example content -->
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed leo et nisl lacinia euismod.
+                    Vivamus vel libero quis tortor commodo consequat.</p>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <div id="mainSection" class="flex-1 h-screen bg-gray-300 p-4">
+            <!-- Main Content Goes Here -->
+            <p>Main content area</p>
+        </div>
+    </div>
+
+   
+
+    <script>
+        // JavaScript to toggle chatroom visibility
+        const toggleChatButton = document.getElementById('toggleChat');
+        const chatContent = document.getElementById('chatContent');
+        const chatSection = document.getElementById('chatSection');
+        const mainSection = document.getElementById('mainSection');
+
+        // Hide chatroom content by default
+        chatSection.classList.add('hidden');
+
+        // Toggle button click event
+        toggleChatButton.addEventListener('click', () => {
+            chatContent.classList.toggle('hidden');
+
+            if (chatContent.classList.contains('hidden')) {
+                // If chat is hidden, expand main section to full width
+                chatSection.classList.remove('w-1/5');
+                chatSection.classList.add('hidden');
+                mainSection.classList.remove('flex-1');
+                mainSection.classList.add('w-full');
+            } else {
+                // If chat is shown, revert to original sizes
+                chatSection.classList.add('w-1/5');
+                chatSection.classList.remove('hidden');
+                mainSection.classList.add('flex-1');
+                mainSection.classList.remove('w-full');
+            }
+        });
+    </script>
+</body>
+
+</html>
