@@ -149,7 +149,7 @@ router.post("/login", async (req, res) => {
     req.session.save(() => {
       // save the user id and logged in status
       req.session.user_id = user.id;
-      req.session.logged_in = true;
+      req.session.loggedIn = true;
 
       // return the user data and a message
       res.status(200).json({ user: user, message: "You are now logged in!" });
@@ -163,7 +163,7 @@ router.post("/login", async (req, res) => {
 // POST /api/users/logout
 router.post("/logout", async (req, res) => {
   // check if the user is logged in
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     // if logged in destroy the session
     req.session.destroy(() => {
       res.status(204).end();
