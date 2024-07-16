@@ -15,6 +15,10 @@ Message.belongsTo(User, { foreignKey: "sender_id" });
 Chatroom.hasMany(Message, { foreignKey: "room_id" });
 Message.belongsTo(Chatroom, { foreignKey: "room_id" });
 
+// game-chatroom
+Game.hasMany(Chatroom, { foreignKey: "game_id" });
+Chatroom.belongsTo(Game, { foreignKey: "game_id" });
+
 // user-game
 const UserGame = sequelize.define(
   "usergame",
