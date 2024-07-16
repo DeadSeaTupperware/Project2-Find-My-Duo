@@ -41,7 +41,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE a game
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const gameData = await Game.destroy({
     where: {
       id: req.params.id,

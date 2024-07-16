@@ -16,6 +16,15 @@ Chatroom.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    // game relationship
+    game_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "game",
+        key: "id",
+      },
+    },
     // chatroom name must be unique
     chatroom_name: {
       type: DataTypes.STRING,
