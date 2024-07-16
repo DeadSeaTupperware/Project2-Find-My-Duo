@@ -16,8 +16,8 @@ router.get("/:id", async (req, res) => {
   });
 
   
-  // res.render('gameList', {game: gameData})
-  return res.json(gameData);
+  res.render('chatboard', {game: gameData})
+  // return res.json(gameData);
 });
 
 // CREATE a game
