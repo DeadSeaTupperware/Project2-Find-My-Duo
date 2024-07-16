@@ -3,16 +3,16 @@
 >
   <!-- Logo as a Link with Division Bar -->
   <a href="/" class="flex items-center">
-    <img src="/path/to/logo.png" alt="Logo" class="w-16 h-16 mr-4" />
+    <img src="/assets/images/FindMyDuo_Logo.png" alt="Logo" class="w-24 h-24 mr-4" />
     <div class="h-16 w-0.5 bg-gray-600 mx-4"></div>
     <!-- Division Bar -->
   </a>
 
   <!-- Navigation -->
   <nav class="absolute top-4 right-8 flex items-center space-x-4">
-    <a href="/gameList" class="text-white hover:text-gray-400">View All</a>
-    <a href="/login" class="text-white hover:text-gray-400">Login</a>
-    <a href="/signup" class="text-white hover:text-gray-400">Sign Up</a>
+    <a href="/gameList" class="text-white hover:text-gray-400 px-4 py-2 border border-gray-300">View All</a>
+    {{> login_logout_button}}
+    {{>signup_button}}
   </nav>
 
   <!-- Secondary Text Links -->

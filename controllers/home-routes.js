@@ -43,6 +43,54 @@ router.get("/chatboard", async (req, res) => {
   }
 });
 
+// router.get("/chatboard/:id", async (req, res) => {
+//   try {
+//     res.render("chatboard");
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+// router.get("/chatboard/:id/chatroom/:roomId", async (req, res) => {
+//   try {
+//     res.render("chatroom");
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+// Route for development
+router.get("/chatboard/chatroom/", async (req, res) => {
+  try {
+    res.render("chatroom");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Route for development
+router.get("/chatboard/createChatroom/", async (req, res) => {
+  try {
+    res.render("create_chatroom");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Route for development
+router.get("/gameList/createGame/", async (req, res) => {
+  try {
+    res.render("create_game");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get("/gameList", async (req, res) => {
   try {
     res.render("gameList");

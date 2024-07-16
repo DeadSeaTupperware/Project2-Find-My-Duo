@@ -1,5 +1,10 @@
-<div>
-    <h2>Register an Account</h2>
+<a
+  href="/"
+  class="text-white px-4 py-2 border border-gray-300 absolute top-4 left-8"
+>Home</a>
+
+{{! <div>
+   
 
     <form class="form signup-form">
       <div class="form-group">
@@ -19,6 +24,54 @@
       </div>
     </form>
   </div>
+</div> }}
+
+<div class="min-h-screen flex flex-col items-center justify-center">
+  <img src="/assets/images/FindMyDuo_Logo.png" alt="Logo" class="h-32 mb-8" />
+
+  <!-- Signup Form -->
+  <form class="w-full max-w-sm p-6 bg-gray-100 rounded-lg shadow-md">
+    <h2 class="font-bold text-3xl text-center text-black mb-6">Sign up to Duo</h2>
+    <div class="mb-4">
+      <label
+        for="name-signup"
+        class="block text-gray-700 font-bold mb-2"
+      >Name:</label>
+      <input
+        class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        type="text"
+        id="name-signup"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="email-signup"
+        class="block text-gray-700 font-bold mb-2"
+      >Email:</label>
+      <input
+        class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        type="text"
+        id="email-signup"
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        for="password-signup"
+        class="block text-gray-700 font-bold mb-2"
+      >Password:</label>
+      <input
+        class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+        type="password"
+        id="password-signup"
+      />
+    </div>
+    <div>
+      <button
+        class="btn w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"
+        type="submit"
+      >Register!</button>
+    </div>
+  </form>
 </div>
 
-<script src="./js/signup.js"></script> 
+<script src="./js/signup.js"></script>
