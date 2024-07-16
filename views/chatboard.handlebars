@@ -1,7 +1,4 @@
-
 {{> dashboard-header }}
-
-
 
  <!-- Toggle Chat Button -->
      <button id="toggleChat"
@@ -12,33 +9,43 @@
 
 <body class="bg-gray-100">
   
-
     <div class="flex gap-4 p-4">
         <!-- Chatroom Section -->
         <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4">
-            <!-- Chatroom Content (Hidden by Default) -->
-            <div id="chatContent" class="hidden h-full overflow-y-auto">
-                <!-- Example content -->
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sed leo et nisl lacinia euismod.
-                    Vivamus vel libero quis tortor commodo consequat.</p>
-                
-                
-
+            <!-- Chatroom List -->
+            <div id="chatroomList" class="overflow-y-auto">
+                {{!-- dynamic chatroom list will appear here --}}
             </div>
+                
         </div>
 
         <!-- Main Content Section -->
         <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4">
             <!-- Main Content Goes Here -->
-            <p>Main content area</p>
-             <a href="#" id="linkBox"
+            <div id="chatContent" class="hidden h-full overflow-y-auto bg-gray-900 p-4" >
+                {{!-- chat messages will appear here --}}
+                <div id="messages" class="mb-4">
+                    {{!-- dynamic chat messages will appear here --}}
+                </div>
+
+                <!-- message Form -->
+                <form id="chatForm">
+                    <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-800 text-white border border-gray-600 rounded" />
+                    <button type="submit" class="w-full p-2 bg-blue-800 text-white border border-blue-800 rounded">Send</button>
+                </form>
+            </div>
+
+            <!-- link to find your duo -->
+            <a href="#" id="linkBox"
                 class="text-white px-4 py-2 border border-gray-300 bg-gray-800 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-8">
-                <span id="linkText">Find your Duo!</span>
+                <span id="linkText">Find your Duo</span>
             </a>
         </div>
     </div>
 
-   
+
+    <!-- SOCKET.IO SCRIPT -->
+    <script src="/socket.io/socket.io.js"></script>
 
     <script>
         // JavaScript to toggle chatroom visibility
@@ -70,6 +77,7 @@
                 toggleIcon.textContent = 'Hide Chat';
             }
         });
-    </script>
-</body>
 
+    </script>
+
+</body>
