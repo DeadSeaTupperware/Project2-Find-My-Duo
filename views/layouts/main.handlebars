@@ -8,27 +8,7 @@
   </head>
 
   <body class="bg-gray-900 text-white">
-    <header>
-
-      <nav>
-        <a href="/">Home</a>
-        {{#if loggedIn}}
-          <button id="logout" class="btn-no-style">Logout</button>
-        {{else}}
-          <a href="/login">Login</a>
-        {{/if}}
-      </nav>
-    </header>
-
-    <main>
-      {{! Render sub-layout }}
-      {{{body}}}
-    </main>
-
-    {{! Render logout script only if user is logged in }}
-    {{#if loggedIn}}
-      <script src="/js/logout.js"></script>
-    {{/if}}
+    {{{body}}}
   </body>
 
 </html>
