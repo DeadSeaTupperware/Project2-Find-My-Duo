@@ -16,7 +16,7 @@ const server = require("http").createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-// Set up Handlebars.js engine with custom helpers
+// set up Handlebars.js engine with custom helpers
 const hbs = exphbs.create({
   helpers,
   // layoutsDir: path.join(__dirname, "views/layouts"),
@@ -40,7 +40,7 @@ const sess = {
 
 app.use(session(sess));
 
-// Inform Express.js on which template engine to use
+// inform Express.js on which template engine to use
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
