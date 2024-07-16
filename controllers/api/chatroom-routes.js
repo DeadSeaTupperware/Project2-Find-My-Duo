@@ -60,6 +60,7 @@ router.get("/:id", authenticate, async (req, res) => {
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
       id: chatroom.id,
+      game_id: chatroom.game_id,
       chatroom_name: chatroom.chatroom_name,
       chatroom_password: chatroom.chatroom_password,
       messages,
