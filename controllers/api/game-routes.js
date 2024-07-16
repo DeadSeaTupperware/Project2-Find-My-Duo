@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // CREATE a game
-router.post("/games", async (req, res) => {
+router.post("/", async (req, res) => {
   const gameData = await Game.create(req.body);
 
   return res.json(gameData);
@@ -41,7 +41,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE a game
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const gameData = await Game.destroy({
     where: {
       id: req.params.id,

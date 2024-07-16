@@ -22,6 +22,7 @@ router.get("/", authenticate, async (req, res) => {
 // authentication required
 router.get("/:id", authenticate, async (req, res) => {
   try {
+    // Purpose: render dynamic chatroom page
     // get chatroom data by id
     const chatroom = await Chatroom.findByPk(req.params.id, {
       // include user and message data
@@ -49,7 +50,21 @@ router.get("/:id", authenticate, async (req, res) => {
       return;
     }
 
-    res.status(200).json(chatroom);
+    // format the message data
+    const messages = chatroom.Messages.map((message) => ({
+      username: message.User.username,
+      message_text: message.message_text,
+      message_timestamp: message.message_timestamp,
+    }));
+
+    // render the chatroom page with the chatroom data
+    res.render("chatroom", {
+      id: chatroom.id,
+      game_id: chatroom.game_id,
+      chatroom_name: chatroom.chatroom_name,
+      chatroom_password: chatroom.chatroom_password,
+      messages,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
