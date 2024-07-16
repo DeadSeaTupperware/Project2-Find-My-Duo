@@ -1,25 +1,19 @@
-<header>
 
-</header>
 {{> dashboard-header }}
 
-<h2>Body for chatboard page</h2>
- <!DOCTYPE html>
-<html lang="en">
+
 
  <!-- Toggle Chat Button -->
-    <button id="toggleChat" class=" text-white px-4 py-2 rounded-md">Toggle
-        Chat</button>
+     <button id="toggleChat"
+        class="text-white px-4 py-2 rounded-md transition duration-300 ease-in-out"><span id="toggleIcon" class="ml-2">View Chat</span>
+    </button>
 
 <body class="bg-gray-100">
-    <header class="bg-gray-900 text-white py-4 px-8">
-        <!-- Your header content here -->
-        <h1>Header</h1>
-    </header>
+  
 
     <div class="flex gap-4 p-4">
         <!-- Chatroom Section -->
-        <div id="chatSection" class="w-1/5 h-screen bg-gray-200 border border-gray-300 p-4">
+        <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4">
             <!-- Chatroom Content (Hidden by Default) -->
             <div id="chatContent" class="hidden h-full overflow-y-auto">
                 <!-- Example content -->
@@ -29,7 +23,7 @@
         </div>
 
         <!-- Main Content Section -->
-        <div id="mainSection" class="flex-1 h-screen bg-gray-300 p-4">
+        <div id="mainSection" class="flex-1 h-screen bg-gray-800 p-4">
             <!-- Main Content Goes Here -->
             <p>Main content area</p>
         </div>
@@ -57,15 +51,17 @@
                 chatSection.classList.add('hidden');
                 mainSection.classList.remove('flex-1');
                 mainSection.classList.add('w-full');
+                toggleIcon.textContent = 'View Chat';
             } else {
                 // If chat is shown, revert to original sizes
                 chatSection.classList.add('w-1/5');
                 chatSection.classList.remove('hidden');
                 mainSection.classList.add('flex-1');
                 mainSection.classList.remove('w-full');
+                toggleIcon.textContent = 'Hide Chat';
             }
         });
     </script>
 </body>
 
-</html>
+
