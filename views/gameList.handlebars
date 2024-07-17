@@ -23,17 +23,23 @@
         <!-- Main Content Section -->
         <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4"style="height: 80vh">
             <!-- Main Content Goes Here -->
-            <div id="chatContent" class="hidden h-full overflow-y-auto  p-4" >
-                {{!-- chat messages will appear here --}}
-               
-
-             
-               
-            </div>
-
-            
-            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {{#each games}}
+    <a href="/{{ id }}" class="block border border-gray-300 p-4 rounded-lg transition duration-300 hover:bg-gray-100">
+      <div class="flex items-center">
+        <img src="{{ cover_art }}" alt="{{ title }}" class="h-24 w-auto mr-4">
+        <div>
+          <h2 class="text-xl font-bold mb-1">{{ title }}</h2>
+          <p class="text-l text-gray-200">{{ description }}</p>
         </div>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+
+            
+            
+        
     </div>
 
 
@@ -42,7 +48,7 @@
     <script>
         // JavaScript to toggle chatroom visibility
         const toggleChatButton = document.getElementById('toggleChat');
-        const chatContent = document.getElementById('chatContent');
+        //const chatContent = document.getElementById('chatContent');
         const chatSection = document.getElementById('chatSection');
         const mainSection = document.getElementById('mainSection');
 
@@ -51,9 +57,9 @@
 
         // Toggle button click event
         toggleChatButton.addEventListener('click', () => {
-            chatContent.classList.toggle('hidden');
+            //chatContent.classList.toggle('hidden');
 
-            if (chatContent.classList.contains('hidden')) {
+            if (!chatSection.classList.contains('hidden')) {
                 // If chat is hidden, expand main section to full width
                 chatSection.classList.remove('w-1/5');
                 chatSection.classList.add('hidden');
