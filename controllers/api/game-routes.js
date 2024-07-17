@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Chatroom } = require("../../models");
 const Game = require("../../models/Game");
-
+const withAuth = require("../../utils/auth.js");
 
 // GET all games
 router.get("/", async (req, res) => {
@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 // GET a game by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", withAuth, async (req, res) => {
   try {
     const allGameData = await Game.findAll();
     const games = allGameData.map((game) => game.get({ plain: true }));
@@ -86,6 +86,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete the game" });
   }
 });
-
 
 module.exports = router;
