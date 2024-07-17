@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Game = require("../models/Game.js");
+const { Op } = require('sequelize');
 
 // GET Popular games for homepage
 router.get("/", async (req, res) => {
@@ -129,5 +130,25 @@ router.get("/gameList", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// Search for games
+router.get('/search', async (req, res) => {
+  try {
+      const searchQuery = req.query.q;
+      const gamesData = await Game.findAll({
+          where: {
+              title: {
+                  [Op.like]: `%${searchQuery}%`,
+              },
+          },
+      });
+      const games = gamesData.map(game => game.get({plain: true}));
+      res.render('searchResults', { games, searchQuery });
+  } catch (error) {
+    console.log(error)
+      res.status(500).json({ error: 'Failed to search games' });
+  }
+});
+
 
 module.exports = router;

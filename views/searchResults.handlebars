@@ -1,32 +1,69 @@
-{{! searchResults.handlebars }}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
-    <header class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center">
-        <div></div>
-        <div>
-            {{> login_logout_button }}
-            {{> signup_button }}
+{{> dashboard-header }}
+
+<!-- Toggle Chat Button -->
+<button id="toggleChat"
+    class="ml-4 text-white px-4 py-2 border border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
+    <span id="toggleIcon" class="mr-2">View Chat</span>
+</button>
+
+<body class="bg-gray-100">
+  
+    <div class="flex gap-4 p-4">
+        <!-- Chatroom Section -->
+        <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+            <!-- Chatroom List -->
+            <div id="chatroomList" class="overflow-y-auto">
+                {{!-- dynamic chatroom list will appear here --}}
+            </div>
         </div>
-    </header>
-    <div class="container mx-auto mt-8">
-        <div class="flex flex-col items-center">
-            <h1 class="text-2xl mb-4">Search Results for "{{searchQuery}}"</h1>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
+
+        <!-- Main Content Section -->
+        <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+            <!-- Search Results -->
+            <h1 class="text-2xl font-bold text-white mb-4">Search Results for "{{searchQuery}}"</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {{#each games}}
-                <a href="/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
-                    <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
-                    <span class="text-center text-sm">{{this.title}}</span>
+                <a href="/games/{{ id }}" class="block border border-gray-300 p-4 rounded-lg transition duration-300 hover:bg-gray-100">
+                    <div class="flex items-center">
+                        <img src="{{ cover_art }}" alt="{{ title }}" class="h-24 w-auto mr-4">
+                        <div>
+                            <h2 class="text-xl font-bold mb-1">{{ title }}</h2>
+                            <p class="text-l text-gray-200">{{ description }}</p>
+                        </div>
+                    </div>
                 </a>
                 {{/each}}
             </div>
         </div>
     </div>
+
+    <script>
+        // JavaScript to toggle chatroom visibility
+        const toggleChatButton = document.getElementById('toggleChat');
+        const chatSection = document.getElementById('chatSection');
+        const mainSection = document.getElementById('mainSection');
+
+        // Hide chatroom content by default
+        chatSection.classList.add('hidden');
+
+        // Toggle button click event
+        toggleChatButton.addEventListener('click', () => {
+            if (!chatSection.classList.contains('hidden')) {
+                // If chat is hidden, expand main section to full width
+                chatSection.classList.remove('w-1/5');
+                chatSection.classList.add('hidden');
+                mainSection.classList.remove('flex-1');
+                mainSection.classList.add('w-full');
+                toggleIcon.textContent = 'View Chat';
+            } else {
+                // If chat is shown, revert to original sizes
+                chatSection.classList.add('w-1/5');
+                chatSection.classList.remove('hidden');
+                mainSection.classList.add('flex-1');
+                mainSection.classList.remove('w-full');
+                toggleIcon.textContent = 'Hide Chat';
+            }
+        });
+    </script>
 </body>
-</html>
+
