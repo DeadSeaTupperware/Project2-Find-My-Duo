@@ -31,8 +31,8 @@ const UserGame = sequelize.define(
   }
 );
 
-User.belongsToMany(Game, { through: UserGame, foreignKey: "user_id" });
-Game.belongsToMany(User, { through: UserGame, foreignKey: "game_id" });
+User.belongsToMany(Game, { through: UserGame });
+Game.belongsToMany(User, { through: UserGame });
 
 // exports
 module.exports = { User, Game, Chatroom, Message, UserGame };
