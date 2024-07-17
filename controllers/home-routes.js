@@ -96,7 +96,13 @@ router.get("/gameList", async (req, res) => {
   try {
     const gameData = await Game.findAll();
     const games = gameData.map((game) => game.get({ plain: true }));
-    res.render("gameList", { games });
+    const set = new Set();
+    while (set.size < 2) {
+      set.add(games[Math.floor(Math.random() * games.length)]);
+    }
+
+    const randomGames = Array.from(set);
+    res.render("gameList", { games, randomGames });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
