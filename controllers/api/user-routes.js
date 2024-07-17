@@ -1,7 +1,7 @@
 // Purpose: To handle the user routes for the API
 // variables
 const router = require("express").Router();
-const { User, Chatroom, Game, Message } = require("../../models");
+const { User, Chatroom, Game } = require("../../models");
 const authenticate = require("../../utils/auth.js");
 
 // GET all users
