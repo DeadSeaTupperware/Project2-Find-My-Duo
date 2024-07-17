@@ -27,33 +27,36 @@ router.get("/", authenticate, async (req, res) => {
   }
 });
 
-// GET one chatboard
+// GET one chatroom
 // GET /api/chatboard/:id
 // authentication required
 router.get("/:id", authenticate, async (req, res) => {
-  // get the chatboard data by its id
   try {
-    const chatboardData = await Chatroom.findByPk(req.params.id, {
+    // get the chatroom data by its id
+    const chatroomData = await Chatroom.findByPk(req.params.id, {
       include: [
         {
           model: Message,
-          include: User,
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
       ],
     });
 
-    // if the chatroom data is not found, return an error
-    if (!chatboardData) {
-      res.status(404).json({ message: "chatboardData not found" });
+    // if no chatroom data found, return 404 status
+    if (!chatroomData) {
+      res.status(404).json({ message: "No chatroom found with this id!" });
       return;
     }
 
     // serialize the chatroom data
-    const chatboard = chatboardData.get({ plain: true });
+    const chatroom = chatroomData.get({ plain: true });
 
-    // render the chatboard page with the chatroom data
-    res.render("chatboard", {
-      chatboard,
+    // render the chatroom page with the chatroom data
+    res.render("chatroom", {
+      ...chatroom,
       loggedIn: req.session.logged_in,
     });
   } catch (err) {
@@ -61,6 +64,5 @@ router.get("/:id", authenticate, async (req, res) => {
   }
 });
 
-res.render;
 // export routes
 module.exports = router;
