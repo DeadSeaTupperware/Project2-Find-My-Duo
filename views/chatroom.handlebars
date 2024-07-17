@@ -53,7 +53,7 @@
     <script>
         // JavaScript to toggle chatroom visibility
         const toggleChatButton = document.getElementById('toggleChat');
-        const chatContent = document.getElementById('chatContent');
+        //const chatContent = document.getElementById('chatContent');
         const chatSection = document.getElementById('chatSection');
         const mainSection = document.getElementById('mainSection');
 
@@ -62,9 +62,9 @@
 
         // Toggle button click event
         toggleChatButton.addEventListener('click', () => {
-            chatContent.classList.toggle('hidden');
+            //chatContent.classList.toggle('hidden');
 
-            if (chatContent.classList.contains('hidden')) {
+            if (!chatSection.classList.contains('hidden')) {
                 // If chat is hidden, expand main section to full width
                 chatSection.classList.remove('w-1/5');
                 chatSection.classList.add('hidden');
