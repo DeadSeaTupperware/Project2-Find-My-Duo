@@ -33,7 +33,11 @@ router.get("/:id", withAuth, async (req, res) => {
 
     const game = gameData.get({ plain: true });
     console.log(game);
-    res.render("chatboard", { game, randomGames });
+    res.render("chatboard", {
+      loggedIn: req.session.loggedIn,
+      game,
+      randomGames,
+    });
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve the game" });
   }
