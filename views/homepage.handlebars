@@ -46,7 +46,7 @@
     {{! links should be pulled from db and direct to chatboard }}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
       <a
-        href="/games/1"
+        href="api/games/1"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
@@ -57,7 +57,7 @@
         <span class="text-center text-sm">League of Legends</span>
       </a>
       <a
-        href="/games/2"
+        href="api/games/2"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
@@ -68,7 +68,7 @@
         <span class="text-center text-sm">Valorant</span>
       </a>
       <a
-        href="/games/3"
+        href="api/games/3"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
@@ -79,7 +79,7 @@
         <span class="text-center text-sm">XDefiant</span>
       </a>
       <a
-        href="/games/4"
+        href="api/games/4"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
@@ -89,6 +89,13 @@
         />
         <span class="text-center text-sm">Call of Duty: Modern Warfare III</span>
       </a>
+
+      {{!-- {{#each games}}
+      <a href="/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
+        <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
+        <span class="text-center text-sm">{{this.title}}</span>
+      </a>
+      {{/each}} --}}
     </div>
 
   </div>
