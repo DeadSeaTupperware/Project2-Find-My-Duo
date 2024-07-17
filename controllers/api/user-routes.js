@@ -55,6 +55,7 @@ router.get(":/id", authenticate, async (req, res) => {
 // POST a new user
 // POST /api/users
 router.post("/", async (req, res) => {
+  console.log(req.body);
   try {
     // create a new user with the user data
     const newUser = await User.create({
@@ -67,6 +68,7 @@ router.post("/", async (req, res) => {
     res.status(200).json(newUser);
   } catch (err) {
     res.status(400).json(err);
+    console.log(err);
   }
 });
 
