@@ -2,12 +2,12 @@
 // variables
 const router = require("express").Router();
 const { Chatroom } = require("../../models");
-const authenticate = require("../../utils/auth.js");
+const withAuth = require("../../utils/auth.js");
 
 // GET all chatrooms
 // GET /api/chatrooms
 // authentication required
-router.get("/", authenticate, async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
     // get all chatroom data
     const chatroomData = await Chatroom.findAll();
@@ -27,7 +27,7 @@ router.get("/", authenticate, async (req, res) => {
 // GET one chatroom
 // GET /api/chatrooms/:id
 // authentication required
-router.get("/:id", authenticate, async (req, res) => {
+router.get("/:id", withAuth, async (req, res) => {
   try {
     // get one chatroom data
     const chatroomData = await Chatroom.findByPk(req.params.id, {

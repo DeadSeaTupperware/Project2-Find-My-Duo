@@ -2,12 +2,12 @@
 // variables
 const router = require("express").Router();
 const { User, Chatroom, Message } = require("../../models");
-const authenticate = require("../../utils/auth.js");
+const withAuth = require("../../utils/auth.js");
 
 // GET all chatrooms
 // GET /api/chatrooms
 // authentication required
-router.get("/", authenticate, async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
     // get all chatroom data
     const chatroomData = await Chatroom.findAll();
@@ -20,7 +20,7 @@ router.get("/", authenticate, async (req, res) => {
 // GET a chatroom by id
 // GET /api/chatrooms/:id
 // authentication required
-router.get("/:id", authenticate, async (req, res) => {
+router.get("/:id", withAuth, async (req, res) => {
   try {
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
@@ -68,7 +68,7 @@ router.get("/:id", authenticate, async (req, res) => {
 // POST a new chatroom
 // POST /api/chatrooms
 // authentication required
-router.post("/", authenticate, async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   try {
     // create a new chatroom
     const newChatroom = await Chatroom.create({
@@ -87,7 +87,7 @@ router.post("/", authenticate, async (req, res) => {
 // PUT (update) a chatroom by id
 // PUT /api/chatrooms/:id
 // authentication required
-router.put("/:id", authenticate, async (req, res) => {
+router.put("/:id", withAuth, async (req, res) => {
   try {
     // update a chatroom by id
     const chatroom = await Chatroom.update(req.body, {
@@ -111,7 +111,7 @@ router.put("/:id", authenticate, async (req, res) => {
 // DELETE a chatroom by id
 // DELETE /api/chatrooms/:id
 // authentication required
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     // delete a chatroom by id
     const chatroom = await Chatroom.destroy({
