@@ -7,6 +7,7 @@ const router = express.Router();
 const authRoutes = require("../../utils/auth.js");
 const userRoutes = require("./user-routes");
 const gameRoutes = require("./game-routes");
+const chatboardRoutes = require("./chatboard-routes");
 const chatroomRoutes = require("./chatroom-routes");
 const messageRoutes = require("./message-routes.js");
 
@@ -14,6 +15,7 @@ const messageRoutes = require("./message-routes.js");
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/games", gameRoutes);
+router.use("/chatboards", chatboardRoutes);
 router.use("/chatrooms", chatroomRoutes);
 router.use("/messages", messageRoutes);
 
