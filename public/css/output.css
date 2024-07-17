@@ -592,6 +592,10 @@ video {
   position: absolute;
 }
 
+.bottom-16 {
+  bottom: 4rem;
+}
+
 .bottom-4 {
   bottom: 1rem;
 }
@@ -606,14 +610,6 @@ video {
 
 .top-4 {
   top: 1rem;
-}
-
-.bottom-6 {
-  bottom: 1.5rem;
-}
-
-.bottom-16 {
-  bottom: 4rem;
 }
 
 .mx-4 {
