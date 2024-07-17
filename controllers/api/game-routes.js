@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { Chatroom } = require("../../models");
 const Game = require("../../models/Game");
 
+
 // GET all games
 router.get("/", async (req, res) => {
   try {
@@ -77,5 +78,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: 'Failed to delete the game' });
   }
 });
+
 
 module.exports = router;
