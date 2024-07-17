@@ -99,7 +99,9 @@ router.get("/gameList/createGame/", async (req, res) => {
 
 router.get("/gameList", async (req, res) => {
   try {
-    res.render("gameList");
+    const gameData = await Game.findAll();
+    const games = gameData.map((game) => game.get({ plain: true }));
+    res.render("gameList", { games });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
