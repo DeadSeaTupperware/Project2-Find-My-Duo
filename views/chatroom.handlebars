@@ -31,6 +31,7 @@
                 {{!-- chat messages will appear here --}}
                 <div id="messages" class="mb-4">
                     {{!-- dynamic chat messages will appear here --}}
+                    {{!-- timestamp - sender: message --}}
                     {{#each messages}}
                     <div class="text-white p-2 bg-gray-600 mb-2 rounded">
                         {{this.message_timestamp}} - {{this.sender_id}}: {{this.message_text}}
@@ -50,111 +51,18 @@
 
     <!-- SOCKET.IO SCRIPT -->
     <script src="/socket.io/socket.io.js"></script>
-
     <script>
-        // JavaScript to toggle chatroom visibility
-        const toggleChatButton = document.getElementById('toggleChat');
-        const chatContent = document.getElementById('chatContent');
-        const chatSection = document.getElementById('chatSection');
-        const mainSection = document.getElementById('mainSection');
+        const roomID = "{{id}}"; // chatroom id
+        const userID = "{{user.id}}"; // user id
 
-        // Hide chatroom content by default
-        chatSection.classList.add('hidden');
-
-        // Toggle button click event
-        toggleChatButton.addEventListener('click', () => {
-            chatContent.classList.toggle('hidden');
-
-            if (chatContent.classList.contains('hidden')) {
-                // If chat is hidden, expand main section to full width
-                chatSection.classList.remove('w-1/5');
-                chatSection.classList.add('hidden');
-                mainSection.classList.remove('flex-1');
-                mainSection.classList.add('w-full');
-                toggleIcon.textContent = 'View Chat';
-            } else {
-                // If chat is shown, revert to original sizes
-                chatSection.classList.add('w-1/5');
-                chatSection.classList.remove('hidden');
-                mainSection.classList.add('flex-1');
-                mainSection.classList.remove('w-full');
-                toggleIcon.textContent = 'Hide Chat';
-            }
-        });
-
-        // socket.io client-side script
+        // connect to socket.io
         const socket = io();
 
-        // joinChatroom function
-        const joinChatroom(chatroom_id) {
-            socket.emit('join', chatroom_id); // emit join event
-            linkBox.style.display = 'none'; // hide link box
-            chatContent.classList.remove('hidden'); // show chat content
-        };
+        // join chatroom
+        socket.emit('joinRoom', { roomID, userID });
 
         // sendMessage function
-        const sendMessage(room_id, sender_id, message_text) {
-            socket.emit('chatMessage', { room_id, sender_id, message_text }); // emit message event
-        };
-
-        // get the chatroom list
-        const chatroomList = document.getElementById('chatroomList');
-
-        // populate default chatroom list
-        const chatroomsDefault = [
-            { id: 1, name: 'New Releases' },
-            { id: 2, name: 'General Game Reviews' },
-            { id: 3, name: 'Easter Egg Finds' },
-        ];
-
-        // loop through chatroomsDefault array
-        chatroomsDefault.forEach((chatroom) => {
-            const chatroomElement = document.createElement('div'); // create a new div element
-            // add classes and text content
-            chatroomElement.classList.add('chatroom', 'cursor-pointer', 'text-white', 'p-2', 'bg-gray-700', 'mb-2', 'rounded');
-            chatroomElement.textContent = chatroom.name; // set text content
-            // add click event listener to join chatroom
-            chatroomElement.addEventListener('click', () => {
-                joinChatroom(chatroom.id);
-                chatContent.classList.remove('hidden');
-                chatSection.classList.remove('w-1/5');
-                chatSection.classList.add('hidden');
-                mainSection.classList.remove('flex-1');
-                mainSection.classList.add('w-full');
-                toggleIcon.textContent = 'Hide Chat';
-            });
-            // append chatroom element to chatroom list
-            chatroomList.appendChild(chatroomElement);
-        });
-
-        // listen for incoming chatroom messages
-        socket.on('chatMessage', (data) => {
-            const { sender_id, message_text, message_timestamp } = data;
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('text-white', 'p-2', 'bg-gray-600', 'mb-2', 'rounded');
-            messageElement.textContent = `${message_timestamp} - ${sender_id}: ${message_text}`;
-            document.getElementById('messages').appendChild(messageElement);
-        });
-
-        // handle form submission
-        document.getElementById('chatForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            // get message input value
-            const messageInput = document.getElementById('messageInput');
-            const messageText = messageInput.value;
-            // check if message is not empty
-            if (messageText.trim()) {
-                sendMessage(1, 1, messageText);
-                messageInput.value = '';
-            }
-            // dynamic room_id and sender_id values
-            // UNFINISHED
-            const room_id = ;
-            const sender_id = '';
-
-            // send message
-            sendMessage(room_id, sender_id, messageText);
-            messageInput.value = '';
-        });
+        function sendMEssage(roomID, userID, message_text) {
+            socket.emit('sendMessage', { roomID, userID, message_text });
+        }
     </script>
-
