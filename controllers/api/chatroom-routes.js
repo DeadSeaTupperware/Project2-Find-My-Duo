@@ -70,10 +70,12 @@ router.get("/:id", authenticate, async (req, res) => {
 // authentication required
 router.post("/", authenticate, async (req, res) => {
   try {
-    // create a new chatroom with the chatroom data
+    // create a new chatroom
     const newChatroom = await Chatroom.create({
-      chatroom_name: req.body.chatroom_name,
-      chatroom_password: req.body.chatroom_password,
+      // spread the request body
+      ...req.body,
+      // add the user id to the chatroom data
+      user_id: req.session.user_id,
     });
 
     res.status(200).json(newChatroom);
@@ -88,19 +90,19 @@ router.post("/", authenticate, async (req, res) => {
 router.put("/:id", authenticate, async (req, res) => {
   try {
     // update a chatroom by id
-    const updatedChatroom = await Chatroom.update(req.body, {
+    const chatroom = await Chatroom.update(req.body, {
       where: {
         id: req.params.id,
       },
     });
 
     // if no chatroom found with this id return 404
-    if (!updatedChatroom) {
+    if (!chatroom) {
       res.status(404).json({ message: "No chatroom found with this id!" });
       return;
     }
 
-    res.status(200).json(updatedChatroom);
+    res.status(200).json(chatroom);
   } catch (err) {
     res.status(500).json(err);
   }
