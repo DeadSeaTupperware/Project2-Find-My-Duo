@@ -592,6 +592,10 @@ video {
   position: absolute;
 }
 
+.bottom-16 {
+  bottom: 4rem;
+}
+
 .bottom-4 {
   bottom: 1rem;
 }

@@ -15,7 +15,7 @@ const messageRoutes = require("./message-routes.js");
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/games", gameRoutes);
-router.use("/chatboards", chatboardRoutes);
+router.use("/chatboard", chatboardRoutes);
 router.use("/chatrooms", chatroomRoutes);
 router.use("/messages", messageRoutes);
 

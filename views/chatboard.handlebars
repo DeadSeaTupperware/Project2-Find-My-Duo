@@ -1,10 +1,12 @@
 {{> dashboard-header }}
 
  <!-- Toggle Chat Button -->
+ {{#if loggedIn}}
      <button id="toggleChat"
         class="ml-4 text-white px-4 py-2 border border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
         <span id="toggleIcon" class="mr-2">View Chat</span>
     </button>
+{{/if}}
 
 
 <body class="bg-gray-100" >
@@ -36,17 +38,22 @@
             </div>
 
             <!-- link to find your duo -->
-            <a href="#" id="linkBox"
+
+
+            {{#if loggedIn}}
+                <a href="#" id="linkBox"
                 class="text-white px-4 py-2 border border-gray-300 bg-gray-800 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-8">
                 <span id="linkText">Find your Duo</span>
             </a>
+            {{/if}}
+
+
+            
         </div>
     </div>
 
 
-    <!-- SOCKET.IO SCRIPT -->
-    <script src="/socket.io/socket.io.js"></script>
-
+   
     <script>
          // JavaScript to toggle chatroom visibility
         const toggleChatButton = document.getElementById('toggleChat');
@@ -78,79 +85,7 @@
             }
         });
 
-        // socket.io client-side script
-        const socket = io();
-
-        // joinChatroom function
-        const joinChatroom(chatroom_id) {
-            socket.emit('join', chatroom_id); // emit join event
-            linkBox.style.display = 'none'; // hide link box
-            chatContent.classList.remove('hidden'); // show chat content
-        };
-
-        // sendMessage function
-        const sendMessage(room_id, sender_id, message_text) {
-            socket.emit('chatMessage', { room_id, sender_id, message_text }); // emit message event
-        };
-
-        // get the chatroom list
-        const chatroomList = document.getElementById('chatroomList');
-
-        // populate default chatroom list
-        const chatroomsDefault = [
-            { id: 1, name: 'New Releases' },
-            { id: 2, name: 'General Game Reviews' },
-            { id: 3, name: 'Easter Egg Finds' },
-        ];
-
-        // loop through chatroomsDefault array
-        chatroomsDefault.forEach((chatroom) => {
-            const chatroomElement = document.createElement('div'); // create a new div element
-            // add classes and text content
-            chatroomElement.classList.add('chatroom', 'cursor-pointer', 'text-white', 'p-2', 'bg-gray-700', 'mb-2', 'rounded');
-            chatroomElement.textContent = chatroom.name; // set text content
-            // add click event listener to join chatroom
-            chatroomElement.addEventListener('click', () => {
-                joinChatroom(chatroom.id);
-                chatContent.classList.remove('hidden');
-                chatSection.classList.remove('w-1/5');
-                chatSection.classList.add('hidden');
-                mainSection.classList.remove('flex-1');
-                mainSection.classList.add('w-full');
-                toggleIcon.textContent = 'Hide Chat';
-            });
-            // append chatroom element to chatroom list
-            chatroomList.appendChild(chatroomElement);
-        });
-
-        // listen for incoming chatroom messages
-        socket.on('chatMessage', (data) => {
-            const { sender_id, message_text, message_timestamp } = data;
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('text-white', 'p-2', 'bg-gray-600', 'mb-2', 'rounded');
-            messageElement.textContent = `${message_timestamp} - ${sender_id}: ${message_text}`;
-            document.getElementById('messages').appendChild(messageElement);
-        });
-
-        // handle form submission
-        document.getElementById('chatForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            // get message input value
-            const messageInput = document.getElementById('messageInput');
-            const messageText = messageInput.value;
-            // check if message is not empty
-            if (messageText.trim()) {
-                sendMessage(1, 1, messageText);
-                messageInput.value = '';
-            }
-            // dynamic room_id and sender_id values
-            // UNFINISHED
-            const room_id = ;
-            const sender_id = '';
-
-            // send message
-            sendMessage(room_id, sender_id, messageText);
-            messageInput.value = '';
-        });
+       
+    
     </script>
 
