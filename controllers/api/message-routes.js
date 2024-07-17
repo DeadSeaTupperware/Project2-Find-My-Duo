@@ -2,12 +2,12 @@
 // variables
 const router = require("express").Router();
 const { User, Chatroom, Message } = require("../../models");
-const authenticate = require("../../utils/auth.js");
+const withAuth = require("../../utils/auth.js");
 
 // GET all messages
 // GET /api/messages
 // authentication required
-router.get("/", authenticate, async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
     // get all message data including user and chatroom data
     const messageData = await Message.findAll({
@@ -32,7 +32,7 @@ router.get("/", authenticate, async (req, res) => {
 // GET a message by id
 // GET /api/messages/:id
 // authentication required
-router.get("/:id", authenticate, async (req, res) => {
+router.get("/:id", withAuth, async (req, res) => {
   try {
     // get message data by id including user and chatroom data
     const message = await Message.findByPk(req.params.id, {
@@ -63,7 +63,7 @@ router.get("/:id", authenticate, async (req, res) => {
 // POST a new message
 // POST /api/messages
 // authentication required
-router.post("/", authenticate, async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   try {
     // create a new message with the message data
     const newMessage = await Message.create({
@@ -81,7 +81,7 @@ router.post("/", authenticate, async (req, res) => {
 // DELETE a message by id
 // DELETE /api/messages/:id
 // authentication required
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     // delete a message by id
     const messageData = await Message.destroy({

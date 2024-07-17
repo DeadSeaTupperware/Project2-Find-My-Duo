@@ -2,12 +2,12 @@
 // variables
 const router = require("express").Router();
 const { User, Chatroom, Game } = require("../../models");
-const authenticate = require("../../utils/auth.js");
+const withAuth = require("../../utils/auth.js");
 
 // GET all users
 // GET /api/users
 // authentication required
-router.get("/", authenticate, async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
     // get all user data except for the password and emergency key
     const userData = await User.findAll({
@@ -22,7 +22,7 @@ router.get("/", authenticate, async (req, res) => {
 // GET a user by id
 // GET /api/users/:id
 // authentication required
-router.get(":/id", authenticate, async (req, res) => {
+router.get(":/id", withAuth, async (req, res) => {
   try {
     // get user data by id except for the password and emergency key
     const user = await User.findByPk(req.params.id, {
@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
 // PUT (update) a user by id
 // PUT /api/users/:id
 // authentication required
-router.put("/:id", authenticate, async (req, res) => {
+router.put("/:id", withAuth, async (req, res) => {
   try {
     // update user data by id
     const user = await User.update(req.body, {
@@ -100,7 +100,7 @@ router.put("/:id", authenticate, async (req, res) => {
 // DELETE a user by id
 // DELETE /api/users/:id
 // authentication required
-router.delete("/:id", authenticate, async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     // delete user data by id
     const user = await User.destroy({
