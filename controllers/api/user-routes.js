@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
 // PUT (update) a user by id
 // PUT /api/users/:id
 // authentication required
-router.put("/:id", authenticate, async (req, res) => {
+router.put("/:id", withAuth, async (req, res) => {
   try {
     // update user data by id
     const user = await User.update(req.body, {
