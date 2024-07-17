@@ -45,13 +45,13 @@ User.init(
         len: [8],
       },
     },
-    emergency_key: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [8],
-      },
-    },
+    // emergency_key: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   validate: {
+    //     len: [8],
+    //   },
+    // },
   },
   {
     hooks: {
@@ -59,7 +59,7 @@ User.init(
         // hash the password before creating a new user
         try {
           newUser.password = await bcrypt.hash(newUser.password, 10);
-          newUser.emergency_key = await bcrypt.hash(newUser.emergency_key, 10);
+          // newUser.emergency_key = await bcrypt.hash(newUser.emergency_key, 10);
           return newUser;
         } catch (err) {
           console.log(err);
@@ -70,7 +70,7 @@ User.init(
         // hash the password before updating a user
         try {
           newUser.password = await bcrypt.hash(newUser.password, 10);
-          newUser.emergency_key = await bcrypt.hash(newUser.emergency_key, 10);
+          // newUser.emergency_key = await bcrypt.hash(newUser.emergency_key, 10);
           return newUser;
         } catch (err) {
           console.log(err);
