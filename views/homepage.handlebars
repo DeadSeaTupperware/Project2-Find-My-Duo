@@ -46,49 +46,56 @@
     {{! links should be pulled from db and direct to chatboard }}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
       <a
-        href="/link1"
+        href="api/games/1"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
           src="/assets/images/league-of-legends.webp"
-          alt="Image 1"
+          alt="League of Legends logo"
           class="w-16 h-16 object-cover mb-2"
         />
         <span class="text-center text-sm">League of Legends</span>
       </a>
       <a
-        href="/link2"
+        href="api/games/2"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
           src="/assets/images/Valorant_3.png"
-          alt="Image 2"
+          alt="Valorant logo"
           class="w-16 h-16 object-cover mb-2"
         />
         <span class="text-center text-sm">Valorant</span>
       </a>
       <a
-        href="/link3"
+        href="api/games/3"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
           src="/assets/images/XDEFIANT.jpeg"
-          alt="Image 3"
+          alt="XDefiant logo"
           class="w-16 h-16 object-cover mb-2"
         />
         <span class="text-center text-sm">XDefiant</span>
       </a>
       <a
-        href="/link4"
+        href="api/games/4"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
         <img
           src="/assets/images/codmw3.jpg"
-          alt="Image 4"
+          alt="CoD: Modern Warfare III logo"
           class="w-16 h-16 object-cover mb-2"
         />
         <span class="text-center text-sm">Call of Duty: Modern Warfare III</span>
       </a>
+
+      {{!-- {{#each games}}
+      <a href="/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
+        <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
+        <span class="text-center text-sm">{{this.title}}</span>
+      </a>
+      {{/each}} --}}
     </div>
 
   </div>
