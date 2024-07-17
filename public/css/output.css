@@ -588,10 +588,6 @@ video {
   }
 }
 
-.collapse {
-  visibility: collapse;
-}
-
 .absolute {
   position: absolute;
 }
@@ -660,14 +656,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.ml-0 {
-  margin-left: 0px;
-}
-
-.ml-auto {
-  margin-left: auto;
 }
 
 .block {
