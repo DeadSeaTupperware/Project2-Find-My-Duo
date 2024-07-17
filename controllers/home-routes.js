@@ -71,6 +71,26 @@ router.get("/chatboard/chatroom/", async (req, res) => {
   }
 });
 
+// Route for development
+router.get("/chatboard/createChatroom/", async (req, res) => {
+  try {
+    res.render("create_chatroom");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Route for development
+router.get("/gameList/createGame/", async (req, res) => {
+  try {
+    res.render("create_game");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 router.get("/gameList", async (req, res) => {
   try {
     res.render("gameList");
