@@ -7,12 +7,12 @@ router.get("/", async (req, res) => {
   try {
     const gameData = await Game.findAll();
     // const games = gameData.get({plain: true})
-    const games = gameData.map(game => game.get({plain: true}))
-    console.log(games)
+    const games = gameData.map((game) => game.get({ plain: true }));
+    console.log(games);
     // Get popular games from DB and render homepage
     res.render("homepage", {
       loggedIn: req.session.loggedIn,
-      games
+      games,
     });
   } catch (err) {
     console.log(err);
@@ -82,7 +82,7 @@ router.get("/chatboard/chatroom/", async (req, res) => {
     const gameData = await Game.findAll();
     const games = gameData.map((game) => game.get({ plain: true }));
     const set = new Set();
-    while (set.size < 2) {
+    while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
 
@@ -119,7 +119,7 @@ router.get("/gameList", async (req, res) => {
     const gameData = await Game.findAll();
     const games = gameData.map((game) => game.get({ plain: true }));
     const set = new Set();
-    while (set.size < 2) {
+    while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
 
