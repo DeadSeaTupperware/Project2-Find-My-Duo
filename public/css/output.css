@@ -592,6 +592,10 @@ video {
   position: absolute;
 }
 
+.relative {
+  position: relative;
+}
+
 .bottom-4 {
   bottom: 1rem;
 }
@@ -696,6 +700,14 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-4\/5 {
+  height: 80%;
+}
+
+.h-3\/4 {
+  height: 75%;
 }
 
 .min-h-screen {
