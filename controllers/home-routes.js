@@ -1,11 +1,17 @@
 const router = require("express").Router();
+const Game = require("../models/Game.js");
 
 // GET Popular games for homepage
 router.get("/", async (req, res) => {
   try {
+    const gameData = await Game.findAll();
+    // const games = gameData.get({plain: true})
+    const games = gameData.map(game => game.get({plain: true}))
+    console.log(games)
     // Get popular games from DB and render homepage
     res.render("homepage", {
       loggedIn: req.session.loggedIn,
+      games
     });
   } catch (err) {
     console.log(err);

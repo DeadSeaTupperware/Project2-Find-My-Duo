@@ -45,7 +45,7 @@
     <!-- Directlink Section -->
     {{! links should be pulled from db and direct to chatboard }}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
-      <a
+      {{!-- <a
         href="api/games/1"
         class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
       >
@@ -88,14 +88,14 @@
           class="w-16 h-16 object-cover mb-2"
         />
         <span class="text-center text-sm">Call of Duty: Modern Warfare III</span>
-      </a>
+      </a> --}}
 
-      {{!-- {{#each games}}
-      <a href="/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
+      {{#each games}}
+      <a href="api/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
         <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
         <span class="text-center text-sm">{{this.title}}</span>
       </a>
-      {{/each}} --}}
+      {{/each}}
     </div>
 
   </div>

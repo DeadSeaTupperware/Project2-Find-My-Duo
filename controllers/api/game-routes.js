@@ -21,7 +21,10 @@ router.get("/:id", async (req, res) => {
     if (!gameData) {
       return res.status(404).json({ error: 'Game not found' });
     }
-    res.render('chatboard', { game: gameData });
+
+    const game = gameData.get({plain: true})
+    console.log(game)
+    res.render('chatboard', { game });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve the game' });
   }
