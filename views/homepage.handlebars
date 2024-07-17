@@ -55,7 +55,7 @@
 
       {{#each games}}
 
-      <a href="api/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
+      <a href="/api/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
         <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
         <span class="text-center text-sm">{{this.title}}</span>
       </a>
