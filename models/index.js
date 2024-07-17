@@ -3,6 +3,7 @@
 const sequelize = require("../config/connection");
 const User = require("./User");
 const Game = require("./Game");
+const Chatboard = require("./Chatboard");
 const Chatroom = require("./Chatroom");
 const Message = require("./Message");
 
@@ -35,4 +36,4 @@ User.belongsToMany(Game, { through: UserGame, foreignKey: "user_id" });
 Game.belongsToMany(User, { through: UserGame, foreignKey: "game_id" });
 
 // exports
-module.exports = { User, Game, Chatroom, Message, UserGame };
+module.exports = { User, Game, Chatboard, Chatroom, Message, UserGame };
