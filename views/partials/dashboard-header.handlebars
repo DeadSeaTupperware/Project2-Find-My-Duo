@@ -19,12 +19,20 @@
   <div
     class="md:absolute md:right-8 md:top-16 md:flex md:items-center md:justify-between md:w-3/4 md:mr-20"
   >
-    <a href="#" class="text-white hover:text-gray-400">Link 1</a>
-    <a href="#" class="text-white hover:text-gray-400">Link 2</a>
-    <a href="#" class="text-white hover:text-gray-400">Link 3</a>
-    <a href="#" class="text-white hover:text-gray-400">Link 4</a>
-    <a href="#" class="text-white hover:text-gray-400">Link 5</a>
-    <a href="#" class="text-white hover:text-gray-400">Link 6</a>
+
+
+    {{#each randomGames}}
+      <a href="/chatboard/{{ id }}" class="flex items-center p-4 ">
+      <img src="{{ cover_art }}" alt="{{ title }}" class="h-8 w-auto mr-4">
+      <div>
+        <h2 class="text-sm font-bold">{{ title }}</h2>
+      </div>
+    </a>
+    {{/each}}
+
   </div>
 
 </header>
+
+
+

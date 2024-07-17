@@ -24,46 +24,41 @@ router.get("/:id", authenticate, async (req, res) => {
   try {
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
-    const chatroom = await Chatroom.findByPk(req.params.id, {
+    const chatroomData = await Chatroom.findByPk(req.params.id, {
       // include user and message data
       include: [
         {
-          model: User,
-          attributes: ["id", "username"],
-        },
-        {
           model: Message,
-          attributes: [
-            "id",
-            "room_id",
-            "sender_id",
-            "message_text",
-            "message_timestamp",
-          ],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
       ],
     });
 
     // if no chatroom found with this id return 404
-    if (!chatroom) {
+    if (!chatroomData) {
       res.status(404).json({ message: "No chatroom found with this id!" });
       return;
     }
 
-    // format the message data
-    const messages = chatroom.Messages.map((message) => ({
-      username: message.User.username,
-      message_text: message.message_text,
-      message_timestamp: message.message_timestamp,
-    }));
+    // serialize the chatroom data
+    const chatroom = chatroom.get({ plain: true });
 
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
-      id: chatroom.id,
-      game_id: chatroom.game_id,
-      chatroom_name: chatroom.chatroom_name,
-      chatroom_password: chatroom.chatroom_password,
-      messages,
+      // spread the chatroom data
+      ...chatroom,
+      // map over the messages and add the username to each message
+      messages: chatroom.messages.map((message) => ({
+        // spread the message data
+        ...message,
+        // add the username to the message data
+        username: message.user.username,
+      })),
+      // add the user id to the chatroom data
+      user: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -75,10 +70,12 @@ router.get("/:id", authenticate, async (req, res) => {
 // authentication required
 router.post("/", authenticate, async (req, res) => {
   try {
-    // create a new chatroom with the chatroom data
+    // create a new chatroom
     const newChatroom = await Chatroom.create({
-      chatroom_name: req.body.chatroom_name,
-      chatroom_password: req.body.chatroom_password,
+      // spread the request body
+      ...req.body,
+      // add the user id to the chatroom data
+      user_id: req.session.user_id,
     });
 
     res.status(200).json(newChatroom);
@@ -93,19 +90,19 @@ router.post("/", authenticate, async (req, res) => {
 router.put("/:id", authenticate, async (req, res) => {
   try {
     // update a chatroom by id
-    const updatedChatroom = await Chatroom.update(req.body, {
+    const chatroom = await Chatroom.update(req.body, {
       where: {
         id: req.params.id,
       },
     });
 
     // if no chatroom found with this id return 404
-    if (!updatedChatroom) {
+    if (!chatroom) {
       res.status(404).json({ message: "No chatroom found with this id!" });
       return;
     }
 
-    res.status(200).json(updatedChatroom);
+    res.status(200).json(chatroom);
   } catch (err) {
     res.status(500).json(err);
   }
