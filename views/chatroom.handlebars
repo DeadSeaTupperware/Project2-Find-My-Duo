@@ -53,6 +53,37 @@
     <!-- SOCKET.IO SCRIPT -->
     <script src="/socket.io/socket.io.js"></script>
     <script>
+    
+        // JavaScript to toggle chatroom visibility
+        const toggleChatButton = document.getElementById('toggleChat');
+        //const chatContent = document.getElementById('chatContent');
+        const chatSection = document.getElementById('chatSection');
+        const mainSection = document.getElementById('mainSection');
+
+        // Hide chatroom content by default
+        chatSection.classList.add('hidden');
+
+        // Toggle button click event
+        toggleChatButton.addEventListener('click', () => {
+            //chatContent.classList.toggle('hidden');
+
+            if (!chatSection.classList.contains('hidden')) {
+                // If chat is hidden, expand main section to full width
+                chatSection.classList.remove('w-1/5');
+                chatSection.classList.add('hidden');
+                mainSection.classList.remove('flex-1');
+                mainSection.classList.add('w-full');
+                toggleIcon.textContent = 'View Chat';
+            } else {
+                // If chat is shown, revert to original sizes
+                chatSection.classList.add('w-1/5');
+                chatSection.classList.remove('hidden');
+                mainSection.classList.add('flex-1');
+                mainSection.classList.remove('w-full');
+                toggleIcon.textContent = 'Hide Chat';
+            }
+        });
+
         const roomID = "{{id}}"; // chatroom id
         const userID = "{{user.id}}"; // user id
 
