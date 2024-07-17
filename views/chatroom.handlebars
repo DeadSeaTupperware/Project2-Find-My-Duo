@@ -31,6 +31,7 @@
                 {{!-- chat messages will appear here --}}
                 <div id="messages" class="mb-4">
                     {{!-- dynamic chat messages will appear here --}}
+                    {{!-- iterates over messages array, rendering each message --}}
                     {{!-- timestamp - sender: message --}}
                     {{#each messages}}
                     <div class="text-white p-2 bg-gray-600 mb-2 rounded">
@@ -59,10 +60,44 @@
         const socket = io();
 
         // join chatroom
-        socket.emit('joinRoom', { roomID, userID });
+        socket.emit('join_room', { roomID, userID });
 
         // sendMessage function
-        function sendMEssage(roomID, userID, message_text) {
-            socket.emit('sendMessage', { roomID, userID, message_text });
+        function sendMEssage(roomID, userID, messageText) {
+            socket.emit('chat_message', {
+                room_id: roomID,
+                sender_id: userID,
+                message_text: messageText,
+                message_timestamp: new Date()
+            });
         }
+
+        // listen for new messages
+        socket.on('chat_message', (data) => {
+            // destructure data
+            const { sender_id, message_text, message_timestamp } = data;
+            // create message
+            const message = `${message_timestamp} - ${sender_id}: ${message_text}`;
+            // create message element and append to chatContent
+            const messageEl = document.createElement('div');
+            messageEl.classList.add('text-white', 'p-2', 'bg-gray-600', 'mb-2', 'rounded');
+            messageEl.textContent = message;
+
+            // append message to chatContent
+            document.getElementById('messages').appendChild(messageEl);
+        });
+
+        // listen for form submit
+        document.getElementById('chatForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // get message text
+            const messageText = document.getElementById('messageInput').value;
+            // if message is not empty
+            if (messageText.trim() !== '') {
+                sendMEssage(roomID, userID, messageText);
+                document.getElementById('messageInput').value = '';
+            }
+        });
+
     </script>
+</body>
