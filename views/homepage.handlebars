@@ -28,14 +28,18 @@
     <div
       class="w-full md:w-3/4 flex flex-wrap items-center text-black justify-between mb-16"
     >
+    <form action="api/games/search" method="get" class="w-full md:w-2/3 flex items-center">
       <input
-        type="text"
-        placeholder="Search..."
         class="w-full md:w-2/3 border-gray-300 border-solid border-2 p-2 rounded-lg mb-2"
+        type="text"
+        name="q"
+        placeholder="Search..."
       />
       <button
+      type="submit"
         class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
       >Search</button>
+      </form>
       <a
         href="/gameList"
         class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
@@ -43,60 +47,19 @@
     </div>
 
     <!-- Directlink Section -->
-    {{! links should be pulled from db and direct to chatboard }}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
-      {{!-- <a
-        href="api/games/1"
-        class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
-      >
-        <img
-          src="/assets/images/league-of-legends.webp"
-          alt="League of Legends logo"
-          class="w-16 h-16 object-cover mb-2"
-        />
-        <span class="text-center text-sm">League of Legends</span>
-      </a>
-      <a
-        href="api/games/2"
-        class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
-      >
-        <img
-          src="/assets/images/Valorant_3.png"
-          alt="Valorant logo"
-          class="w-16 h-16 object-cover mb-2"
-        />
-        <span class="text-center text-sm">Valorant</span>
-      </a>
-      <a
-        href="api/games/3"
-        class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
-      >
-        <img
-          src="/assets/images/XDEFIANT.jpeg"
-          alt="XDefiant logo"
-          class="w-16 h-16 object-cover mb-2"
-        />
-        <span class="text-center text-sm">XDefiant</span>
-      </a>
-      <a
-        href="api/games/4"
-        class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center"
-      >
-        <img
-          src="/assets/images/codmw3.jpg"
-          alt="CoD: Modern Warfare III logo"
-          class="w-16 h-16 object-cover mb-2"
-        />
-        <span class="text-center text-sm">Call of Duty: Modern Warfare III</span>
-      </a> --}}
 
       {{#each games}}
+
       <a href="api/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
         <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
         <span class="text-center text-sm">{{this.title}}</span>
       </a>
+
       {{/each}}
+
     </div>
 
   </div>
+
 </div>

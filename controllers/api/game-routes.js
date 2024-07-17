@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Chatroom } = require("../../models");
 const Game = require("../../models/Game");
+const { Op } = require('sequelize');
 
 // GET all games
 router.get("/", async (req, res) => {
@@ -75,6 +76,23 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: 'Game deleted' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete the game' });
+  }
+});
+
+// Search for games
+router.get('/search', async (req, res) => {
+  try {
+      const searchQuery = req.query.q;
+      const games = await Game.findAll({
+          where: {
+              title: {
+                  [Op.like]: `%${searchQuery}%`,
+              },
+          },
+      });
+      res.render('searchResults', { games, searchQuery });
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to search games' });
   }
 });
 
