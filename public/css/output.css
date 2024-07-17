@@ -588,12 +588,12 @@ video {
   }
 }
 
-.absolute {
-  position: absolute;
+.collapse {
+  visibility: collapse;
 }
 
-.relative {
-  position: relative;
+.absolute {
+  position: absolute;
 }
 
 .bottom-4 {
@@ -662,6 +662,14 @@ video {
   margin-top: 2rem;
 }
 
+.ml-0 {
+  margin-left: 0px;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
 .block {
   display: block;
 }
@@ -700,14 +708,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-4\/5 {
-  height: 80%;
-}
-
-.h-3\/4 {
-  height: 75%;
 }
 
 .min-h-screen {
