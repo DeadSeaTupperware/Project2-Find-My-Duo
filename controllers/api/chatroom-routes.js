@@ -24,46 +24,41 @@ router.get("/:id", authenticate, async (req, res) => {
   try {
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
-    const chatroom = await Chatroom.findByPk(req.params.id, {
+    const chatroomData = await Chatroom.findByPk(req.params.id, {
       // include user and message data
       include: [
         {
-          model: User,
-          attributes: ["id", "username"],
-        },
-        {
           model: Message,
-          attributes: [
-            "id",
-            "room_id",
-            "sender_id",
-            "message_text",
-            "message_timestamp",
-          ],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
         },
       ],
     });
 
     // if no chatroom found with this id return 404
-    if (!chatroom) {
+    if (!chatroomData) {
       res.status(404).json({ message: "No chatroom found with this id!" });
       return;
     }
 
-    // format the message data
-    const messages = chatroom.Messages.map((message) => ({
-      username: message.User.username,
-      message_text: message.message_text,
-      message_timestamp: message.message_timestamp,
-    }));
+    // serialize the chatroom data
+    const chatroom = chatroom.get({ plain: true });
 
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
-      id: chatroom.id,
-      game_id: chatroom.game_id,
-      chatroom_name: chatroom.chatroom_name,
-      chatroom_password: chatroom.chatroom_password,
-      messages,
+      // spread the chatroom data
+      ...chatroom,
+      // map over the messages and add the username to each message
+      messages: chatroom.messages.map((message) => ({
+        // spread the message data
+        ...message,
+        // add the username to the message data
+        username: message.user.username,
+      })),
+      // add the user id to the chatroom data
+      user: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
