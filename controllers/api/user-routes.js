@@ -11,7 +11,7 @@ router.get("/", authenticate, async (req, res) => {
   try {
     // get all user data except for the password and emergency key
     const userData = await User.findAll({
-      attributes: { exclude: ["password", "emergency_key"] },
+      attributes: { exclude: ["password"] },
     });
     res.status(200).json(userData);
   } catch (err) {
@@ -26,7 +26,7 @@ router.get(":/id", authenticate, async (req, res) => {
   try {
     // get user data by id except for the password and emergency key
     const user = await User.findByPk(req.params.id, {
-      attributes: { exclude: ["password", "emergency_key"] },
+      attributes: { exclude: ["password"] },
       // include chatroom and game data
       include: [
         {
@@ -61,7 +61,7 @@ router.post("/", async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      emergency_key: req.body.emergency_key,
+      // emergency_key: req.body.emergency_key,
     });
 
     res.status(200).json(newUser);
