@@ -3,18 +3,24 @@
     "title": "League of Legends",
     "release_date": "10/27/2009",
     "description": "Multiplayer online battle arena video game developed and published by Riot Games.",
-    "cover_art": "./public/assets/images/league-of-legends.webp"
+    "cover_art": "/assets/images/league-of-legends.webp"
   },
   {
     "title": "Valorant",
     "release_date": "06/02/2020",
     "description": "Free-to-play first-person tactical hero shooter developed and published by Riot Games.",
-    "cover_art": "./public/assets/images/VALORANT_RiotGames.jpeg"
+    "cover_art": "/assets/images/Valorant_3.png"
   },
   {
     "title": "XDefiant",
     "release_date": "05/21/2024",
     "description": "Free-to-play first-person shooter game developed by Ubisoft San Francisco and published by Ubisoft.",
-    "cover_art": "./public/assets/images/XDEFIANT.jpeg"
+    "cover_art": "/assets/images/XDEFIANT.jpeg"
+  },
+  {
+    "title": "Call of Duty: Modern Warfare III",
+    "release_date": "2023-11-10T05:00:00.000Z",
+    "description": " First-person shooter game developed by Sledgehammer Games and published by Activision.  first-person shooter game developed by Sledgehammer Games and published by Activision.",
+    "cover_art": "/assets/images/codmw3.jpg"
   }
 ]

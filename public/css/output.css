@@ -588,6 +588,10 @@ video {
   }
 }
 
+.collapse {
+  visibility: collapse;
+}
+
 .absolute {
   position: absolute;
 }
@@ -658,6 +662,14 @@ video {
   margin-top: 2rem;
 }
 
+.ml-0 {
+  margin-left: 0px;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
 .block {
   display: block;
 }
@@ -726,6 +738,10 @@ video {
   width: 100%;
 }
 
+.max-w-md {
+  max-width: 28rem;
+}
+
 .max-w-sm {
   max-width: 24rem;
 }
@@ -736,6 +752,10 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize-none {
+  resize: none;
 }
 
 .grid-cols-2 {
