@@ -6,7 +6,6 @@ const { Op } = require('sequelize');
 router.get("/", async (req, res) => {
   try {
     const gameData = await Game.findAll();
-    // const games = gameData.get({plain: true})
     const games = gameData.map(game => game.get({plain: true}))
     console.log(games)
     // Get popular games from DB and render homepage
