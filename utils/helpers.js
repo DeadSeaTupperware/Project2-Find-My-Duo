@@ -14,4 +14,13 @@ function eqParticipant(value1, value2) {
   }
   return false; // Return false if value1 is not found in value2 after iterating through all elements
 }
-module.exports = { eq, eqParticipant };
+
+function lookup(collection, key, property) {
+  return collection[key][property];
+}
+
+function subtract(value, sub, options) {
+  return value - sub;
+}
+
+module.exports = { eq, eqParticipant, lookup, subtract };

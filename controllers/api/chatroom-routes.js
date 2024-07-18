@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 // GET a chatroom by id
 // GET /api/chatrooms/:id
 // authentication required
-router.get("/:id", withAuth, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const allGameData = await Game.findAll();
     const games = allGameData.map((game) => game.get({ plain: true }));

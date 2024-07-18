@@ -11,18 +11,21 @@
 <body class="bg-gray-100">
     <div class="flex flex-col md:flex-row gap-4 p-4">
         <!-- Chatroom Section -->
-        <div id="chatSection" class="w-full md:w-1/5 h-80 md:h-screen bg-gray-800 border border-gray-300 p-4 md:overflow-hidden">
+        <div id="chatSection" class="w-full md:w-1/5 h-80 md:h-screen bg-gray-800 border border-gray-300 p-4 md:overflow-hidden hidden">
             <!-- Chatroom List -->
             <div id="chatroomList" class="overflow-y-auto h-full">
+                <h2 class="text-2xl font-bold text-white mb-4">Your chatrooms:</h2>
                 {{!-- dynamic chatroom list will appear here --}}
                 {{#each chatRooms}}
                     {{#if (eqParticipant ../user_id chatroom_participant)}}
                         <div class="flex justify-center">
-                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 px-4 py-2 m-2 border border-gray-300 rounded-lg text-center">
-                                <p>{{chatroom_name}}</p>
+                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
+                                <p class="font-bold">{{chatroom_name}}</p>
+                                {{!-- print the game title here using the game_id --}}
+                                {{!-- verify that the game_id is correct: {{../game.id - 1}} --}}
+                                <p class="text-sm text-gray-400">{{lookup ../games (subtract game_id 1) "title"}}</p>
                             </a>
                         </div>
-
                     {{/if}}
                 {{/each}}
             </div>
@@ -31,38 +34,29 @@
         <!-- Main Content Section -->
         <div id="mainSection" class="flex-1 h-auto md:h-screen bg-gray-800 border border-gray-300 p-4 relative">
             <!-- Main Content Goes Here -->
-
-            <div id="chatContent" class="h-full overflow-y-auto  p-4" >
-
-               
-                    {{#each games}}
-                        {{#if (eq ../game.id id)}}
-                            <p style="font-size: 2.5rem;">{{title}} Chat Rooms</p>
-
+            <div id="chatContent" class="h-full overflow-y-auto p-4" style="height: 80vh">
+                {{#each games}}
+                    {{#if (eq ../game.id id)}}
+                        <p class="text-4xl font-bold text-white mb-4">{{title}} Chat Rooms</p>
+                    {{/if}}
+                {{/each}}
+                <div id="messages" class="mb-4 border-t-2 border-gray-300 pt-4"></div>
+                {{!-- dynamic chat rooms will appear here --}}
+                <div class="grid grid-cols-2 gap-4">
+                    {{#each chatRooms}}
+                        {{#if (eq ../game.id game_id)}}
+                            <a href="/api/chatrooms/{{id}}" class="chatroom-link p-4 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500 text-center">
+                                <p class="text-center"><span class="font-bold">{{chatroom_name}}</span></span>, <span class="text-sm text-gray-400">Title: {{lookup ../games (subtract game_id 1) "title"}}</span></p>
+                            </a>
                         {{/if}}
                     {{/each}}
-                    <div id="messages" class="mb-4 border-t border-gray-300 pt-4"></div>
-                    {{!-- dynamic chat rooms will appear here --}}
-                    <div class="grid grid-cols-2 gap-4">
-                        {{#each chatRooms}}
-                            {{#if (eq ../game.id game_id)}}
-                                <a href="/api/chatrooms/{{id}}" class="chatroom-link p-4 border border-gray-300 rounded-lg inline-block">
-                                    <p class="text-center">{{chatroom_name}}</p>
-                                </a>
-                            {{/if}}
-                        {{/each}}
-                    </div>
+                </div>
             </div>
-
-            </div>
-
-            <!-- link to find your duo -->
-            {{#if loggedIn}}
-            <a href="/chatboard/createChatroom/{{game.id}}" id="linkBox"
+            <!-- New Chatroom Button -->
+            <a href="/chatboard/createChatroom" id="createChatroomButton"
                 class="text-white px-4 py-2 border border-gray-300 bg-gray-700 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-4">
-                <span id="linkText" class="font-bold">Create Chatroom</span>
+                <span id="createChatroomText" class="font-bold">Create Chatroom</span>
             </a>
-            {{/if}}
         </div>
     </div>
 </body>
@@ -72,6 +66,7 @@
     const toggleChatButton = document.getElementById('toggleChat');
     const chatSection = document.getElementById('chatSection');
     const mainSection = document.getElementById('mainSection');
+    const toggleIcon = document.getElementById('toggleIcon');
 
     // Hide chatroom content by default
     chatSection.classList.add('hidden');
