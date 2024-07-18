@@ -106,6 +106,7 @@ router.get("/chatboard/createChatroom/:id", async (req, res) => {
     console.log(game);
     res.render("create_chatroom", {
       game,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     console.log(err);
