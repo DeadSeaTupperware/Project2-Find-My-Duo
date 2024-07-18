@@ -690,6 +690,10 @@ video {
   display: block;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .flex {
   display: flex;
 }
@@ -874,6 +878,10 @@ video {
   border-width: 2px;
 }
 
+.border-t {
+  border-top-width: 1px;
+}
+
 .border-solid {
   border-style: solid;
 }
@@ -981,6 +989,10 @@ video {
 
 .pb-16 {
   padding-bottom: 4rem;
+}
+  
+.pt-4 {
+  padding-top: 1rem;
 }
 
 .text-center {

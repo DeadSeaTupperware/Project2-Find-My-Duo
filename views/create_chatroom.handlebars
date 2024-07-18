@@ -15,7 +15,7 @@
     <h2 class="font-bold text-3xl text-center mb-6">
       Create Duo Request for
       {{game.title}}</h2>
-    <div class="mb-4">
+    {{! <div class="mb-4">
       <label
         for="username"
         class="block text-gray-700 font-bold mb-2"
@@ -25,7 +25,9 @@
         type="text"
         id="username"
       />
-    </div>
+    </div> }}
+
+    <input type="hidden" id="user-id" value="{{user_id}}" />
 
     <div class="mb-4">
       <label
@@ -39,7 +41,7 @@
       />
     </div>
 
-    <div class="mb-4">
+    {{! <div class="mb-4">
       <label for="rank" class="block text-gray-700 font-bold mb-2">Rank:</label>
       <input
         class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-900"
@@ -67,7 +69,7 @@
         class="form-input w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-900 h-32 resize-none"
         id="comment"
       ></textarea>
-    </div>
+    </div> }}
     <div>
       <button
         class="btn w-full bg-gray-900 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline"

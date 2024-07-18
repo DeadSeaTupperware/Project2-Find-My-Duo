@@ -44,10 +44,11 @@ router.get("/:id", async (req, res) => {
     }
 
     // serialize the chatroom data
-    const chatroom = chatroom.get({ plain: true });
+    const chatroom = chatroomData.get({ plain: true });
 
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
+      loggedIn: req.session.loggedIn,
       // spread the chatroom data
       ...chatroom,
       // map over the messages and add the username to each message
@@ -58,7 +59,7 @@ router.get("/:id", async (req, res) => {
         username: message.user.username,
       })),
       // add the user id to the chatroom data
-      user: req.session.user_id,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -68,7 +69,7 @@ router.get("/:id", async (req, res) => {
 // POST a new chatroom
 // POST /api/chatrooms
 // authentication required
-router.post("/", withAuth, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     // create a new chatroom
     const newChatroom = await Chatroom.create({
