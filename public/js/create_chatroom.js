@@ -26,7 +26,7 @@ const createChatFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace("/");
+      document.location.replace(`/api/games/${game_id}`);
     } else {
       alert(response.statusText);
       console.log(response.status);
