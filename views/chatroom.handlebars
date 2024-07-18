@@ -40,11 +40,11 @@
                     </div>
                     {{/each}}
                 </div>
-
-                <!-- message Form -->
-                <form id="chatForm">
                     <input type="hidden" id="user-id" value="{{user_id}}" />
                     <input type="hidden" id="room-id" value="{{id}}" />
+                <!-- message Form -->
+                <form id="chatForm">
+                    <h2>Hi, I'm {{user_id}}</h2>
                     <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-800 text-white border border-gray-600 rounded" />
                     <button type="submit" class="w-full p-2 bg-blue-800 text-white border border-blue-800 rounded">Send</button>
                 </form>
@@ -87,27 +87,38 @@
             }
         });
 
-        const roomID = document.querySelector("#room-id").value;; // chatroom id
-        const userID = document.querySelector("#user-id").value;; // user id
+        const roomID = document.querySelector("#room-id").value; // chatroom id
+        const userID = document.querySelector("#user-id").value; // user id
 
+if (isNaN(userID)) {
+            console.error('Invalid userID:', document.querySelector("#user-id").value);
+} else {
         // connect to socket.io
         const socket = io();
 
+        socket.on("connect", () => {
+        console.log("Connected to the server");
+        });
+
         // join chatroom
-        socket.emit('join_room', { roomID, userID });
+        console.log('Joining room:', roomID);
+        console.log('As user: ', userID);
+        socket.emit('join_room', roomID);
 
         // sendMessage function
         function sendMessage(roomID, userID, messageText) {
+            console.log('Sending message:', { room_id: roomID, sender_id: userID, message_text: messageText });
             socket.emit('chat_message', {
                 room_id: roomID,
                 sender_id: userID,
                 message_text: messageText,
-                message_timestamp: new Date()
+                message_timestamp: new Date().toISOString()
             });
         }
 
         // listen for new messages
         socket.on('chat_message', (data) => {
+             console.log("Received chat_message data:", data); // Added logging for debugging
             // destructure data
             const { sender_id, message_text, message_timestamp } = data;
             // create message
@@ -132,6 +143,6 @@
                 document.getElementById('messageInput').value = '';
             }
         });
-
+    }
     </script>
 </body>

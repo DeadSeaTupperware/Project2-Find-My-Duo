@@ -59,7 +59,7 @@ router.get("/:id", withAuth, async (req, res) => {
         username: message.user.username,
       })),
       // add the user id to the chatroom data
-      user: req.session.user_id,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);

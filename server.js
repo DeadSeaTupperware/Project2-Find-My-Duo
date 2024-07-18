@@ -59,6 +59,11 @@ sequelize.sync({ force: false }).then(() => {
 io.on("connection", (socket) => {
   console.log("a user connected!");
 
+  // Debugging the connection event
+  socket.on("connect", () => {
+    console.log("A user connected");
+  });
+
   // listen for join-room event
   socket.on("join_room", (room_id) => {
     // join the room
@@ -66,72 +71,45 @@ io.on("connection", (socket) => {
     console.log(`User joined room ${room_id}`);
   });
 
-  // // listen for chat message
-  // socket.on("chat_message", async (data) => {
-  //   // destructure data
-  //   const { room_id, sender_id, message_text, message_timestamp } = data;
-
-  //   // Convert sender_id to integer if it's a string
-  //   const parsedSenderId = parseInt(sender_id, 10);
-
-  //   // try to create a new message
-  //   // Check if sender_id is a valid integer
-  //   if (!isNaN(parsedSenderId)) {
-  //     try {
-  //       // wait for the message to be created
-  //       await Message.create({
-  //         room_id: room_id,
-  //         sender_id: parsedSenderId,
-  //         message_text: message_text,
-  //         message_timestamp: message_timestamp,
-  //       });
-
-  //       // emit the message to the room
-  //       io.to(room_id).emit("chat_message", {
-  //         sender_id: parsedSenderId,
-  //         message_text: message_text,
-  //         message_timestamp: new Date(),
-  //       });
-  //     } catch (err) {
-  //       // log any errors
-  //       console.log("Error sending message: ", err);
-  //     }
-  //   } else {
-  //     console.log("Invalid sender_id: ", sender_id);
-  //   }
-  // });
-
   // listen for chat message
   socket.on("chat_message", async (data) => {
+    // Debugging: Log the data to ensure it has the expected structure
+    console.log("Received chat_message data:", data);
     // destructure data
     const { room_id, sender_id, message_text, message_timestamp } = data;
 
-    // Convert sender_id to integer if it's a string
+    // Validate `room_id`, `message_text`, and `message_timestamp`
+    if (!room_id || !message_text || !message_timestamp) {
+      console.log("Missing data in chat_message event:", data);
+      return;
+    }
+
+    // Validate `sender_id` and convert to integer
     const parsedSenderId = parseInt(sender_id, 10);
+    if (isNaN(parsedSenderId)) {
+      console.log("Invalid sender_id:", sender_id);
+      return;
+    }
 
-    // Check if sender_id is a valid integer and room_id is a string
-    if (!isNaN(parsedSenderId) && typeof room_id === "string") {
-      try {
-        // wait for the message to be created
-        await Message.create({
-          room_id: room_id,
-          sender_id: parsedSenderId,
-          message_text: message_text,
-          message_timestamp: message_timestamp,
-        });
+    // try to create a new message
+    try {
+      // Create a new message entry in the database
+      await Message.create({
+        room_id: room_id,
+        sender_id: parsedSenderId,
+        message_text: message_text,
+        message_timestamp: message_timestamp,
+      });
 
-        // emit the message to the room
-        io.to(room_id).emit("chat_message", {
-          sender_id: parsedSenderId,
-          message_text: message_text,
-          message_timestamp: new Date(),
-        });
-      } catch (err) {
-        // log any errors
-        console.log("Error sending message: ", err);
-      }
-    } else {
-      console.log("Invalid sender_id or room_id: ", sender_id, room_id);
+      // emit the message to the room
+      io.to(room_id).emit("chat_message", {
+        sender_id: parsedSenderId,
+        message_text: message_text,
+        message_timestamp: new Date(),
+      });
+    } catch (err) {
+      // log any errors
+      console.log("Error sending message: ", err);
     }
   });
 
