@@ -168,7 +168,11 @@ router.get("/search", async (req, res) => {
       },
     });
     const games = gamesData.map((game) => game.get({ plain: true }));
-    res.render("searchResults", { games, searchQuery });
+    res.render("searchResults", {
+      games,
+      loggedIn: req.session.loggedIn,
+      searchQuery,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to search games" });
