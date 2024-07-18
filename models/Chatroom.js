@@ -16,6 +16,11 @@ Chatroom.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    // chatroom name must be unique
+    chatroom_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     // game relationship
     game_id: {
       type: DataTypes.INTEGER,
@@ -24,11 +29,6 @@ Chatroom.init(
         model: "game",
         key: "id",
       },
-    },
-    // chatroom name must be unique
-    chatroom_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     // chatroom password must be at least 8 characters long
     // chatroom_password: {

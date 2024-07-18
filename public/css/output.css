@@ -746,16 +746,12 @@ video {
   max-width: 28rem;
 }
 
-.max-w-sm {
-  max-width: 24rem;
-}
-
-.max-w-screen-md {
-  max-width: 768px;
-}
-
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.max-w-sm {
+  max-width: 24rem;
 }
 
 .flex-1 {
@@ -780,10 +776,6 @@ video {
 
 .flex-col {
   flex-direction: column;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
 }
 
 .items-center {
@@ -1063,16 +1055,8 @@ video {
     display: flex;
   }
 
-  .md\:w-2\/3 {
-    width: 66.666667%;
-  }
-
   .md\:w-3\/4 {
     width: 75%;
-  }
-
-  .md\:w-1 {
-    width: 0.25rem;
   }
 
   .md\:grid-cols-2 {
