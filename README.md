@@ -70,17 +70,21 @@ MIT License
 
 [Render Deployment](https://project2-find-my-duo.onrender.com/)
 
-### Home Page
+### Homepage
 
 ![Homepage](public/assets/images/homepage.png)
 
-### Sign-Up Page
+### Sign-Up
 
 ![Sign-Up](public/assets/images/signup.png)
 
-### Game List Page
+### Game List
 
 ![Game List](public/assets/images/game-lists.png)
+
+### Create Chatroom
+
+![Create Chatroom](public/assets/images/create-chatroom.gif)
 
 ## Usage
 
