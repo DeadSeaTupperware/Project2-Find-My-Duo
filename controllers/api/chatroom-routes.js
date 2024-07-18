@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 // GET a chatroom by id
 // GET /api/chatrooms/:id
 // authentication required
-router.get("/:id", async (req, res) => {
+router.get("/:id", withAuth, async (req, res) => {
   try {
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
@@ -44,10 +44,11 @@ router.get("/:id", async (req, res) => {
     }
 
     // serialize the chatroom data
-    const chatroom = chatroom.get({ plain: true });
+    const chatroom = chatroomData.get({ plain: true });
 
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
+      loggedIn: req.session.loggedIn,
       // spread the chatroom data
       ...chatroom,
       // map over the messages and add the username to each message
