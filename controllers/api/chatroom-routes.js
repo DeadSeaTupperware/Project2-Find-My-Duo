@@ -1,7 +1,7 @@
 // Purpose: To handle the chatroom routes for the API
 // variables
 const router = require("express").Router();
-const { User, Chatroom, Message } = require("../../models");
+const { User, Chatroom, Message, Game } = require("../../models");
 const withAuth = require("../../utils/auth.js");
 
 // GET all chatrooms
@@ -22,6 +22,14 @@ router.get("/", async (req, res) => {
 // authentication required
 router.get("/:id", async (req, res) => {
   try {
+    const allGameData = await Game.findAll();
+    const games = allGameData.map((game) => game.get({ plain: true }));
+    const set = new Set();
+    while (set.size < 4) {
+      set.add(games[Math.floor(Math.random() * games.length)]);
+    }
+    const randomGames = Array.from(set);
+
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
     const chatroomData = await Chatroom.findByPk(req.params.id, {
@@ -49,6 +57,7 @@ router.get("/:id", async (req, res) => {
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
       loggedIn: req.session.loggedIn,
+      randomGames,
       // spread the chatroom data
       ...chatroom,
       // map over the messages and add the username to each message

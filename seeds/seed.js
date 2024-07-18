@@ -13,10 +13,12 @@ const seedDatabase = async () => {
     returning: true,
   });
 
-  await Game.bulkCreate(gameData, {
-    individualHooks: true,
-    returning: true,
-  });
+  for (let i = 0; i < gameData.length; i++) {
+    await Game.create(gameData[i], {
+      individualHooks: true,
+      returning: true,
+    });
+  }
 
   await Chatroom.bulkCreate(chatroomData, {
     individualHooks: true,

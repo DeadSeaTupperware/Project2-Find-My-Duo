@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { Chatroom } = require("../models");
 const Game = require("../models/Game.js");
 const { Op } = require("sequelize");
 const withAuth = require("../utils/auth.js");
@@ -129,18 +130,25 @@ router.get("/gameList/createGame/", async (req, res) => {
 
 router.get("/gameList", withAuth, async (req, res) => {
   try {
-    const gameData = await Game.findAll();
-    const games = gameData.map((game) => game.get({ plain: true }));
+    const allGameData = await Game.findAll();
+    const games = allGameData.map((game) => game.get({ plain: true }));
     const set = new Set();
     while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
-
     const randomGames = Array.from(set);
+
+    const chatRoomData = await Chatroom.findAll();
+    const chatRooms = chatRoomData.map((chatroom) =>
+      chatroom.get({ plain: true })
+    );
+
     res.render("gameList", {
       loggedIn: req.session.loggedIn,
       games,
+      user_id: req.session.user_id,
       randomGames,
+      chatRooms,
     });
   } catch (err) {
     console.log(err);
