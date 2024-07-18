@@ -20,14 +20,14 @@
                 {{#each chatRooms}}
                     {{#if (eqParticipant ../user_id chatroom_participant)}}
                         <div class="flex justify-center">
-                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 px-4 py-2 m-2 border border-gray-300 rounded-lg text-center">
-                                <p>{{chatroom_name}}</p>
+                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
+                                <p class="font-bold">{{chatroom_name}}</p>
                             </a>
                         </div>
-
                     {{/if}}
                 {{/each}}
             </div>
+
         </div>
 
         <!-- Main Content Section -->
@@ -57,12 +57,7 @@
             </form>
             
             </div>
-            <!-- message Form -->
-            <form id="chatForm" class="mt-2">
-                <h2 class="font-bold pb-1">Alias: {{user_id}}</h2>
-                <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-700 text-white border border-gray-600 rounded" />
-                <button type="submit" class="w-full p-2 bg-blue-600 text-white border border-blue-500 rounded">Send</button>
-            </form>
+
         </div>
     </div>
 
