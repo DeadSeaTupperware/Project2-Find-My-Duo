@@ -592,6 +592,10 @@ video {
   position: absolute;
 }
 
+.relative {
+  position: relative;
+}
+
 .bottom-16 {
   bottom: 4rem;
 }
@@ -610,6 +614,10 @@ video {
 
 .top-4 {
   top: 1rem;
+}
+
+.right-4 {
+  right: 1rem;
 }
 
 .mx-4 {
@@ -666,6 +674,14 @@ video {
   margin-top: 2rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .block {
   display: block;
 }
@@ -708,6 +724,10 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-5\/6 {
+  height: 83.333333%;
 }
 
 .min-h-screen {
@@ -899,10 +919,6 @@ video {
   padding: 1.5rem;
 }
 
-.p-3 {
-  padding: 0.75rem;
-}
-
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -931,6 +947,10 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.pb-16 {
+  padding-bottom: 4rem;
 }
 
 .text-center {
