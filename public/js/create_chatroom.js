@@ -1,13 +1,14 @@
 const createChatFormHandler = async (event) => {
   event.preventDefault();
 
-  const gameId = game.id;
-  const chatroomName = document.querySelector("#chatroom-name").value.trim();
+  const chatroom_name = document.querySelector("#chatroom-name").value.trim();
+  const game_id = 1;
+  const chatroom_participant = [1];
 
-  if (gameId && chatroomName) {
+  if (chatroom_name && game_id && chatroom_participant) {
     const response = await fetch("/api/chatrooms", {
       method: "POST",
-      body: JSON.stringify({ gameId, chatroomName, chatroomPassword }),
+      body: JSON.stringify({ chatroom_name, game_id, chatroom_participant }),
       headers: { "Content-Type": "application/json" },
     });
 
