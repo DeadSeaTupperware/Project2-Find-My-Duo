@@ -39,6 +39,7 @@ router.get("/:id", withAuth, async (req, res) => {
     const game = gameData.get({ plain: true });
     console.log(game);
     res.render("chatboard", {
+      games,
       loggedIn: req.session.loggedIn,
       game,
       randomGames,
