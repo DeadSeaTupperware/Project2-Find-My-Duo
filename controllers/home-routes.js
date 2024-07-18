@@ -95,9 +95,18 @@ router.get("/chatboard/chatroom/", async (req, res) => {
 });
 
 // Route for development
-router.get("/chatboard/createChatroom/", async (req, res) => {
+router.get("/chatboard/createChatroom/:id", async (req, res) => {
   try {
-    res.render("create_chatroom");
+    const gameData = await Game.findByPk(req.params.id);
+    if (!gameData) {
+      return res.status(404).json({ error: "Game not found" });
+    }
+
+    const game = gameData.get({ plain: true });
+    console.log(game);
+    res.render("create_chatroom", {
+      game,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

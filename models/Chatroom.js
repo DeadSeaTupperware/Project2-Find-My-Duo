@@ -33,7 +33,7 @@ Chatroom.init(
     // chatroom password must be at least 8 characters long
     chatroom_password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         len: [8],
       },
