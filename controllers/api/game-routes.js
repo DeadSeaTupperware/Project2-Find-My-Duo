@@ -22,8 +22,13 @@ router.get("/:id", withAuth, async (req, res) => {
     while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
-
     const randomGames = Array.from(set);
+
+    const chatRoomData = await Chatroom.findAll();
+    const chatRooms = chatRoomData.map((chatroom) =>
+      chatroom.get({ plain: true })
+    );
+
     const gameData = await Game.findByPk(req.params.id, {
       include: [{ model: Chatroom }],
     });
@@ -34,9 +39,12 @@ router.get("/:id", withAuth, async (req, res) => {
     const game = gameData.get({ plain: true });
     console.log(game);
     res.render("chatboard", {
+      games,
       loggedIn: req.session.loggedIn,
+      user_id: req.session.user_id,
       game,
       randomGames,
+      chatRooms,
     });
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve the game" });
