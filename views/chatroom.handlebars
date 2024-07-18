@@ -26,8 +26,9 @@
 
         <!-- Main Content Section -->
         <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+         <h2>Chat Room: "{{chatroom_name}}"</h2>
             <!-- Main Content Goes Here -->
-            <div id="chatContent" class="hidden h-full overflow-y-auto bg-gray-900 p-4" >
+            <div id="chatContent" class="h-full overflow-y-auto bg-gray-900 p-4" >
                 {{!-- chat messages will appear here --}}
                 <div id="messages" class="mb-4">
                     {{!-- dynamic chat messages will appear here --}}
@@ -42,6 +43,8 @@
 
                 <!-- message Form -->
                 <form id="chatForm">
+                    <input type="hidden" id="user-id" value="{{user_id}}" />
+                    <input type="hidden" id="room-id" value="{{id}}" />
                     <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-800 text-white border border-gray-600 rounded" />
                     <button type="submit" class="w-full p-2 bg-blue-800 text-white border border-blue-800 rounded">Send</button>
                 </form>
@@ -84,8 +87,8 @@
             }
         });
 
-        const roomID = "{{id}}"; // chatroom id
-        const userID = "{{user.id}}"; // user id
+        const roomID = document.querySelector("#room-id").value;; // chatroom id
+        const userID = document.querySelector("#user-id").value;; // user id
 
         // connect to socket.io
         const socket = io();
@@ -94,7 +97,7 @@
         socket.emit('join_room', { roomID, userID });
 
         // sendMessage function
-        function sendMEssage(roomID, userID, messageText) {
+        function sendMessage(roomID, userID, messageText) {
             socket.emit('chat_message', {
                 room_id: roomID,
                 sender_id: userID,
@@ -119,13 +122,13 @@
         });
 
         // listen for form submit
-        document.getElementById('chatForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+        document.getElementById('chatForm').addEventListener('submit', (event) => {
+            event.preventDefault();
             // get message text
             const messageText = document.getElementById('messageInput').value;
             // if message is not empty
             if (messageText.trim() !== '') {
-                sendMEssage(roomID, userID, messageText);
+                sendMessage(roomID, userID, messageText);
                 document.getElementById('messageInput').value = '';
             }
         });

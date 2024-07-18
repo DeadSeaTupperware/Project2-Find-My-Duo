@@ -4,6 +4,7 @@ const session = require("express-session");
 const exphbs = require("express-handlebars");
 const routes = require("./controllers");
 const helpers = require("./utils/helpers");
+const { Message } = require("./models");
 
 const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
@@ -51,7 +52,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`Now listening at port ${PORT}`));
+  server.listen(PORT, () => console.log(`Now listening at port ${PORT}`));
 });
 
 // set up for Socket.io
@@ -65,30 +66,72 @@ io.on("connection", (socket) => {
     console.log(`User joined room ${room_id}`);
   });
 
+  // // listen for chat message
+  // socket.on("chat_message", async (data) => {
+  //   // destructure data
+  //   const { room_id, sender_id, message_text, message_timestamp } = data;
+
+  //   // Convert sender_id to integer if it's a string
+  //   const parsedSenderId = parseInt(sender_id, 10);
+
+  //   // try to create a new message
+  //   // Check if sender_id is a valid integer
+  //   if (!isNaN(parsedSenderId)) {
+  //     try {
+  //       // wait for the message to be created
+  //       await Message.create({
+  //         room_id: room_id,
+  //         sender_id: parsedSenderId,
+  //         message_text: message_text,
+  //         message_timestamp: message_timestamp,
+  //       });
+
+  //       // emit the message to the room
+  //       io.to(room_id).emit("chat_message", {
+  //         sender_id: parsedSenderId,
+  //         message_text: message_text,
+  //         message_timestamp: new Date(),
+  //       });
+  //     } catch (err) {
+  //       // log any errors
+  //       console.log("Error sending message: ", err);
+  //     }
+  //   } else {
+  //     console.log("Invalid sender_id: ", sender_id);
+  //   }
+  // });
+
   // listen for chat message
   socket.on("chat_message", async (data) => {
     // destructure data
     const { room_id, sender_id, message_text, message_timestamp } = data;
 
-    // try to create a new message
-    try {
-      // wait for the message to be created
-      await Message.create({
-        room_id: room_id,
-        sender_id: sender_id,
-        message_text: message_text,
-        message_timestamp: message_timestamp,
-      });
+    // Convert sender_id to integer if it's a string
+    const parsedSenderId = parseInt(sender_id, 10);
 
-      // emit the message to the room
-      io.to(room_id).emit("chat_message", {
-        sender_id: sender_id,
-        message_text: message_text,
-        message_timestamp: new Date(),
-      });
-    } catch (err) {
-      // log any errors
-      console.log("Error sending message: ", err);
+    // Check if sender_id is a valid integer and room_id is a string
+    if (!isNaN(parsedSenderId) && typeof room_id === "string") {
+      try {
+        // wait for the message to be created
+        await Message.create({
+          room_id: room_id,
+          sender_id: parsedSenderId,
+          message_text: message_text,
+          message_timestamp: message_timestamp,
+        });
+
+        // emit the message to the room
+        io.to(room_id).emit("chat_message", {
+          sender_id: parsedSenderId,
+          message_text: message_text,
+          message_timestamp: new Date(),
+        });
+      } catch (err) {
+        // log any errors
+        console.log("Error sending message: ", err);
+      }
+    } else {
+      console.log("Invalid sender_id or room_id: ", sender_id, room_id);
     }
   });
 
@@ -97,3 +140,7 @@ io.on("connection", (socket) => {
     console.log("a user disconnected!");
   });
 });
+
+// server.listen(PORT, () => {
+//   console.log(`Now listening at port ${PORT}`);
+// });
