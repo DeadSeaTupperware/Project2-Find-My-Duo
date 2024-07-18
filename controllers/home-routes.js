@@ -1,13 +1,14 @@
 const router = require("express").Router();
 const Game = require("../models/Game.js");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
+const withAuth = require("../utils/auth.js");
 
 // GET Popular games for homepage
 router.get("/", async (req, res) => {
   try {
     const gameData = await Game.findAll();
-    const games = gameData.map(game => game.get({plain: true}))
-    console.log(games)
+    const games = gameData.map((game) => game.get({ plain: true }));
+    console.log(games);
     // Get popular games from DB and render homepage
     res.render("homepage", {
       loggedIn: req.session.loggedIn,
@@ -94,9 +95,18 @@ router.get("/chatboard/chatroom/", async (req, res) => {
 });
 
 // Route for development
-router.get("/chatboard/createChatroom/", async (req, res) => {
+router.get("/chatboard/createChatroom/:id", async (req, res) => {
   try {
-    res.render("create_chatroom");
+    const gameData = await Game.findByPk(req.params.id);
+    if (!gameData) {
+      return res.status(404).json({ error: "Game not found" });
+    }
+
+    const game = gameData.get({ plain: true });
+    console.log(game);
+    res.render("create_chatroom", {
+      game,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -113,7 +123,7 @@ router.get("/gameList/createGame/", async (req, res) => {
   }
 });
 
-router.get("/gameList", async (req, res) => {
+router.get("/gameList", withAuth, async (req, res) => {
   try {
     const gameData = await Game.findAll();
     const games = gameData.map((game) => game.get({ plain: true }));
@@ -123,7 +133,11 @@ router.get("/gameList", async (req, res) => {
     }
 
     const randomGames = Array.from(set);
-    res.render("gameList", { games, randomGames });
+    res.render("gameList", {
+      loggedIn: req.session.loggedIn,
+      games,
+      randomGames,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -131,23 +145,22 @@ router.get("/gameList", async (req, res) => {
 });
 
 // Search for games
-router.get('/search', async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
-      const searchQuery = req.query.q;
-      const gamesData = await Game.findAll({
-          where: {
-              title: {
-                  [Op.like]: `%${searchQuery}%`,
-              },
-          },
-      });
-      const games = gamesData.map(game => game.get({plain: true}));
-      res.render('searchResults', { games, searchQuery });
+    const searchQuery = req.query.q;
+    const gamesData = await Game.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${searchQuery}%`,
+        },
+      },
+    });
+    const games = gamesData.map((game) => game.get({ plain: true }));
+    res.render("searchResults", { games, searchQuery });
   } catch (error) {
-    console.log(error)
-      res.status(500).json({ error: 'Failed to search games' });
+    console.log(error);
+    res.status(500).json({ error: "Failed to search games" });
   }
 });
-
 
 module.exports = router;

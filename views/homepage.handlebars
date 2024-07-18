@@ -25,30 +25,31 @@
     <img src="/assets/images/FindMyDuo_Logo.png" alt="Logo" class="w-96 w-96 mb-16" />
 
     <!-- Search Section -->
-    <div
-      class="w-full md:w-3/4 flex flex-wrap items-center text-black justify-between mb-16"
-    >
-    <form id="search-form" class="w-full md:w-2/3 flex items-center">
-      <input
-        class="w-full md:w-2/3 border-gray-300 border-solid border-2 p-2 rounded-lg mb-2"
-        type="text"
-        name="q"
-        placeholder="Search..."
-        id="search-input"
-      />
-      <button
-      type="submit"
-        class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
-      >Search</button>
-      </form>
-      <script src="/js/search.js">
-  
-      </script>
-      <a
-        href="/gameList"
-        class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
-      >View All</a>
-    </div>
+   <div class="max-w-screen-xl mx-auto w-80vh flex items-center justify-between text-black mb-16">
+    <form id="search-form" class="flex items-center" style="width: 80vh">
+        <input
+            class="flex-1 md:flex-2 border-gray-300 border-solid border-2 p-2 rounded-lg mr-2"
+            type="text"
+            name="q"
+            placeholder="Search..."
+            id="search-input"
+        />
+        <button
+            type="submit"
+            class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
+        >Search</button>
+        <a
+            href="/gameList"
+            class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
+        >View All</a>
+    </form>
+    <script src="/js/search.js"></script>
+</div>
+
+</div>
+
+
+
 
     <!-- Directlink Section -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
