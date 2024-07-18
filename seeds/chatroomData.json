@@ -1,14 +1,22 @@
 [
   {
     "game_id": 1,
-    "chatroom_name": "LoL Fans"
+    "chatroom_name": "LoL Fans",
+    "chatroom_participant": [1, 2]
+  },
+  {
+    "game_id": 1,
+    "chatroom_name": "LoL Fans 2",
+    "chatroom_participant": [1]
   },
   {
     "game_id": 2,
-    "chatroom_name": "Valorant Fans"
+    "chatroom_name": "Valorant Fans",
+    "chatroom_participant": [3]
   },
   {
     "game_id": 3,
-    "chatroom_name": "XDefiant Fans"
+    "chatroom_name": "XDefiant Fans",
+    "chatroom_participant": [3, 1]
   }
 ]

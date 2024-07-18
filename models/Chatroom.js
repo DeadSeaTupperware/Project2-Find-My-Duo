@@ -30,6 +30,11 @@ Chatroom.init(
         key: "id",
       },
     },
+    chatroom_participant: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: false,
+      defaultValue: [],
+    },
     // chatroom password must be at least 8 characters long
     // chatroom_password: {
     //   type: DataTypes.STRING,
