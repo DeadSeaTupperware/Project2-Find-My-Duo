@@ -802,10 +802,6 @@ video {
   flex-grow: 1;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
 .resize-none {
   resize: none;
 }
