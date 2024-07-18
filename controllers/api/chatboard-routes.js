@@ -70,10 +70,19 @@ router.get("/:id", withAuth, async (req, res) => {
 });
 
 // GET route to render the create_chatroom view
-router.get("/createChatroom", withAuth, (req, res) => {
-  res.render("create_chatroom", {
-    loggedIn: req.session.logged_in,
-  });
+router.get("/createChatroom", withAuth, async (req, res) => {
+  try {
+    const allGameData = await Game.findAll();
+    const games = allGameData.map((game) => game.get({ plain: true }));
+
+    res.render("create_chatroom", {
+      loggedIn: req.session.loggedIn,
+      user_id: req.session.user_id,
+      games, // Pass games data to the template if needed
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // export routes

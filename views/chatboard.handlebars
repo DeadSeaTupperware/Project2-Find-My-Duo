@@ -19,7 +19,7 @@
                 {{#each chatRooms}}
                     {{#if (eqParticipant ../user_id chatroom_participant)}}
                         <div class="flex justify-center">
-                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
+                            <a href="/api/chatrooms/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
                                 <p class="font-bold">{{chatroom_name}}</p>
                                 {{!-- print the game title here using the game_id --}}
                                 {{!-- verify that the game_id is correct: {{../game.id - 1}} --}}
@@ -53,9 +53,9 @@
                 </div>
             </div>
             <!-- New Chatroom Button -->
-            <a href="/chatboard/createChatroom" id="createChatroomButton"
+            <a href="/chatboard/createChatroom/{{game.id}}" id="linkBox"
                 class="text-white px-4 py-2 border border-gray-300 bg-gray-700 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-4">
-                <span id="createChatroomText" class="font-bold">Create Chatroom</span>
+                <span id="linkText" class="font-bold">Create Chatroom</span>
             </a>
         </div>
     </div>
