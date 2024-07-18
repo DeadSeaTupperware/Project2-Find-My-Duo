@@ -1,22 +1,32 @@
 [
   {
-    "game_id": 1,
     "chatroom_name": "LoL Fans",
+    "game_id": 1,
     "chatroom_participant": [1, 2]
   },
   {
-    "game_id": 1,
     "chatroom_name": "LoL Fans 2",
+    "game_id": 1,
     "chatroom_participant": [1]
   },
   {
-    "game_id": 2,
     "chatroom_name": "Valorant Fans",
+    "game_id": 2,
     "chatroom_participant": [3]
   },
   {
-    "game_id": 3,
     "chatroom_name": "XDefiant Fans",
+    "game_id": 3,
     "chatroom_participant": [3, 1]
+  },
+  {
+    "chatroom_name": "Elden Ring Fans",
+    "game_id": 5,
+    "chatroom_participant": [1, 2, 3]
+  },
+  {
+    "chatroom_name": "Apex Legends Fans",
+    "game_id": 8,
+    "chatroom_participant": [2, 3]
   }
 ]
