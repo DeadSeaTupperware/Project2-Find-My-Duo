@@ -4,7 +4,7 @@
 {{#if loggedIn}}
 <button id="toggleChat"
     class="ml-4 text-white px-4 py-2 border bg-gray-700 border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
-    <span id="toggleIcon" class="font-bold">View Chat</span>
+    <span id="toggleIcon" class="font-bold">View Chats</span>
 </button>
 {{/if}}
 
@@ -15,6 +15,16 @@
             <!-- Chatroom List -->
             <div id="chatroomList" class="overflow-y-auto h-full">
                 {{!-- dynamic chatroom list will appear here --}}
+                {{#each chatRooms}}
+                    {{#if (eqParticipant ../user_id chatroom_participant)}}
+                        <div class="flex justify-center">
+                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 px-4 py-2 m-2 border border-gray-300 rounded-lg text-center">
+                                <p>{{chatroom_name}}</p>
+                            </a>
+                        </div>
+
+                    {{/if}}
+                {{/each}}
             </div>
         </div>
 
@@ -65,14 +75,14 @@
             chatSection.classList.add('hidden');
             mainSection.classList.remove('flex-1');
             mainSection.classList.add('w-full');
-            toggleIcon.textContent = 'View Chat';
+            toggleIcon.textContent = 'View Chats';
         } else {
             // If chat is shown, revert to original sizes
             chatSection.classList.add('md:w-1/5');
             chatSection.classList.remove('hidden');
             mainSection.classList.add('flex-1');
             mainSection.classList.remove('w-full');
-            toggleIcon.textContent = 'Hide Chat';
+            toggleIcon.textContent = 'Hide Chats';
         }
     });
 </script>
