@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-const routes = require("./controllers");
+const routes = require("./controllers"); // Ensure this path is correct
 const helpers = require("./utils/helpers");
 const { Message } = require("./models");
 
@@ -59,7 +59,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(routes);
+app.use(routes); // Ensure this is correctly set up to use your routes
 
 sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => console.log(`Now listening at port ${PORT}`));

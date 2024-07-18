@@ -16,18 +16,7 @@
             <div id="chatroomList" class="overflow-y-auto h-full">
                 <h2 class="text-2xl font-bold text-white mb-4">Your chatrooms:</h2>
                 {{!-- dynamic chatroom list will appear here --}}
-                {{#each chatroomData}}
-                    {{#if (includes ../currentUser.id this.chatroom_participant)}}
-                    <div class="border bg-gray-900 border-gray-300 p-4 rounded-lg mb-4">
-                        <h3 class="text-lg font-bold text-white">{{ this.chatroom_name }}</h3>
-                        {{#each ../games}}
-                            {{#if (equals this.id ../this.game_id)}}
-                            <p class="text-sm text-gray-400">{{ this.title }}</p>
-                            {{/if}}
-                        {{/each}}
-                    </div>
-                    {{/if}}
-                {{/each}}
+                
             </div>
         </div>
 
@@ -35,8 +24,8 @@
         <div id="mainSection" class="flex-1 h-auto md:h-screen bg-gray-800 border border-gray-300 p-4 relative">
             <!-- Main Content Goes Here -->
             <h2 class="text-2xl font-bold text-white mb-4">Popular Titles:</h2>
-            <div class="overflow-y-auto h-full pb-16">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="overflow-y-auto h-full mb-16" style="height: 90vh">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" style="height: 80vh">
                     {{#each games}}
                     <a href="/api/games/{{ id }}"
                         class="block border bg-gray-900 border-gray-300 p-4 rounded-lg transition duration-300 hover:bg-gray-500">

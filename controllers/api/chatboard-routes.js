@@ -69,5 +69,12 @@ router.get("/:id", withAuth, async (req, res) => {
   }
 });
 
+// GET route to render the create_chatroom view
+router.get("/createChatroom", withAuth, (req, res) => {
+  res.render("create_chatroom", {
+    loggedIn: req.session.logged_in,
+  });
+});
+
 // export routes
 module.exports = router;
