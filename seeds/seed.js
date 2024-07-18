@@ -3,7 +3,7 @@ const { User, Game, Chatroom } = require("../models");
 
 const userData = require("./userData.json");
 const gameData = require("./gameData.json");
-const chatroomData = require("./gameData.json");
+const chatroomData = require("./chatroomData.json");
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
