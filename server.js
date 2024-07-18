@@ -2,8 +2,9 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-const routes = require("./controllers");
+const routes = require("./controllers"); // Ensure this path is correct
 const helpers = require("./utils/helpers");
+const { Message } = require("./models");
 
 const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
@@ -23,10 +24,20 @@ const hbs = exphbs.create({
   // partialsDir: [path.join(__dirname, "views/partials")],
 });
 
+// Register custom Handlebars helpers
+const Handlebars = require("handlebars");
+Handlebars.registerHelper("includes", function (array, value) {
+  return array.includes(value);
+});
+
+Handlebars.registerHelper("equals", function (a, b) {
+  return a === b;
+});
+
 const sess = {
   secret: "Super secret secret",
   cookie: {
-    maxAge: 300000,
+    maxAge: 60 * 60 * 1000,
     httpOnly: true,
     secure: false,
     sameSite: "strict",
@@ -48,15 +59,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(routes);
+app.use(routes); // Ensure this is correctly set up to use your routes
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`Now listening at port ${PORT}`));
+  server.listen(PORT, () => console.log(`Now listening at port ${PORT}`));
 });
 
 // set up for Socket.io
 io.on("connection", (socket) => {
   console.log("a user connected!");
+
+  // Debugging the connection event
+  socket.on("connect", () => {
+    console.log("A user connected");
+  });
 
   // listen for join-room event
   socket.on("join_room", (room_id) => {
@@ -67,24 +83,39 @@ io.on("connection", (socket) => {
 
   // listen for chat message
   socket.on("chat_message", async (data) => {
+    // Debugging: Log the data to ensure it has the expected structure
+    console.log("Received chat_message data:", data);
     // destructure data
     const { room_id, sender_id, message_text, message_timestamp } = data;
 
+    // Validate `room_id`, `message_text`, and `message_timestamp`
+    if (!room_id || !message_text || !message_timestamp) {
+      console.log("Missing data in chat_message event:", data);
+      return;
+    }
+
+    // Validate `sender_id` and convert to integer
+    const parsedSenderId = parseInt(sender_id, 10);
+    if (isNaN(parsedSenderId)) {
+      console.log("Invalid sender_id:", sender_id);
+      return;
+    }
+
     // try to create a new message
     try {
-      // wait for the message to be created
+      // Create a new message entry in the database
       await Message.create({
         room_id: room_id,
-        sender_id: sender_id,
+        sender_id: parsedSenderId,
         message_text: message_text,
         message_timestamp: message_timestamp,
       });
 
       // emit the message to the room
       io.to(room_id).emit("chat_message", {
-        sender_id: sender_id,
+        sender_id: parsedSenderId,
         message_text: message_text,
-        message_timestamp: new Date(),
+        message_timestamp: new Date().toISOString(),
       });
     } catch (err) {
       // log any errors
@@ -97,3 +128,7 @@ io.on("connection", (socket) => {
     console.log("a user disconnected!");
   });
 });
+
+// server.listen(PORT, () => {
+//   console.log(`Now listening at port ${PORT}`);
+// });

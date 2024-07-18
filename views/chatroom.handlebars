@@ -1,12 +1,12 @@
-{{> dashboard-header }}
+{{>dashboard-header}}
 
-
-
- <!-- Toggle Chat Button -->
-     <button id="toggleChat"
-        class="ml-4 text-white px-4 py-2 border border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
-        <span id="toggleIcon" class="mr-2">View Chat</span>
-    </button>
+<!-- Toggle Chat Button -->
+{{#if loggedIn}}
+<button id="toggleChat"
+    class="ml-4 text-white px-4 py-2 border bg-gray-700 border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
+    <span id="toggleIcon" class="font-bold">View Chat</span>
+</button>
+{{/if}}
 
 <body class="bg-gray-100">
   
@@ -14,20 +14,27 @@
         <!-- Chatroom Section -->
         <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
             <!-- Chatroom List -->
-            <div id="chatroomList" class="overflow-y-auto">
+             <div id="chatroomList" class="overflow-y-auto h-full">
+                <h2 class="text-2xl font-bold text-white mb-4">Your chatrooms:</h2>
                 {{!-- dynamic chatroom list will appear here --}}
-                {{#each chatrooms}}
-                <div class="chatroom cursor-pointer text-white p-2 bg-gray-700 mb-2 rounded">
-                    <a href="/chatroom/{{this.id}}" class="text-white">{{this.chatroom_name}}</a>
-                </div>
+                {{#each chatRooms}}
+                    {{#if (eqParticipant ../user_id chatroom_participant)}}
+                        <div class="flex justify-center">
+                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 px-4 py-2 m-2 border border-gray-300 rounded-lg text-center">
+                                <p>{{chatroom_name}}</p>
+                            </a>
+                        </div>
+
+                    {{/if}}
                 {{/each}}
             </div>
         </div>
 
         <!-- Main Content Section -->
-        <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+        <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4 flex flex-col" style="height: 80vh">
+            <h2 class="font-bold mb-2">Chat Room: "{{chatroom_name}}"</h2>
             <!-- Main Content Goes Here -->
-            <div id="chatContent" class="hidden h-full overflow-y-auto bg-gray-900 p-4" >
+            <div id="chatContent" class="flex-1 overflow-y-auto bg-gray-800 p-4">
                 {{!-- chat messages will appear here --}}
                 <div id="messages" class="mb-4">
                     {{!-- dynamic chat messages will appear here --}}
@@ -39,13 +46,23 @@
                     </div>
                     {{/each}}
                 </div>
-
-                <!-- message Form -->
-                <form id="chatForm">
-                    <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-800 text-white border border-gray-600 rounded" />
-                    <button type="submit" class="w-full p-2 bg-blue-800 text-white border border-blue-800 rounded">Send</button>
-                </form>
+                <input type="hidden" id="user-id" value="{{user_id}}" />
+                <input type="hidden" id="room-id" value="{{id}}" />
             </div>
+            <!-- message Form -->
+            <form id="chatForm" class="mt-2">
+                <h2 class="font-bold pb-1">Alias: {{user_id}}</h2>
+                <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-700 text-white border border-gray-600 rounded" />
+                <button type="submit" class="w-full p-2 bg-blue-600 text-white border border-blue-500 rounded">Send</button>
+            </form>
+            
+            </div>
+            <!-- message Form -->
+            <form id="chatForm" class="mt-2">
+                <h2 class="font-bold pb-1">Alias: {{user_id}}</h2>
+                <input id="messageInput" type="text" placeholder="Type a message..." class="w-full p-2 mb-2 bg-gray-700 text-white border border-gray-600 rounded" />
+                <button type="submit" class="w-full p-2 bg-blue-600 text-white border border-blue-500 rounded">Send</button>
+            </form>
         </div>
     </div>
 
@@ -84,31 +101,57 @@
             }
         });
 
-        const roomID = "{{id}}"; // chatroom id
-        const userID = "{{user.id}}"; // user id
+        const roomID = document.querySelector("#room-id").value; // chatroom id
+        const userID = document.querySelector("#user-id").value; // user id
 
+if (isNaN(userID)) {
+            console.error('Invalid userID:', document.querySelector("#user-id").value);
+} else {
         // connect to socket.io
         const socket = io();
 
+        socket.on("connect", () => {
+        console.log("Connected to the server");
+        });
+
         // join chatroom
-        socket.emit('join_room', { roomID, userID });
+        console.log('Joining room:', roomID);
+        console.log('As user: ', userID);
+        socket.emit('join_room', roomID);
 
         // sendMessage function
-        function sendMEssage(roomID, userID, messageText) {
+        function sendMessage(roomID, userID, messageText) {
+            console.log('Sending message:', { room_id: roomID, sender_id: userID, message_text: messageText });
             socket.emit('chat_message', {
                 room_id: roomID,
                 sender_id: userID,
                 message_text: messageText,
-                message_timestamp: new Date()
+                message_timestamp: new Date().toISOString()
+            });
+        }
+
+        // format timestamp
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
             });
         }
 
         // listen for new messages
         socket.on('chat_message', (data) => {
+             console.log("Received chat_message data:", data); // Added logging for debugging
             // destructure data
             const { sender_id, message_text, message_timestamp } = data;
+            // format message timestamp
+            const formattedTimestamp = formatTimestamp(message_timestamp);
             // create message
-            const message = `${message_timestamp} - ${sender_id}: ${message_text}`;
+            const message = `${formattedTimestamp} - ${sender_id}: ${message_text}`;
             // create message element and append to chatContent
             const messageEl = document.createElement('div');
             messageEl.classList.add('text-white', 'p-2', 'bg-gray-600', 'mb-2', 'rounded');
@@ -119,16 +162,16 @@
         });
 
         // listen for form submit
-        document.getElementById('chatForm').addEventListener('submit', (e) => {
-            e.preventDefault();
+        document.getElementById('chatForm').addEventListener('submit', (event) => {
+            event.preventDefault();
             // get message text
             const messageText = document.getElementById('messageInput').value;
             // if message is not empty
             if (messageText.trim() !== '') {
-                sendMEssage(roomID, userID, messageText);
+                sendMessage(roomID, userID, messageText);
                 document.getElementById('messageInput').value = '';
             }
         });
-
+    }
     </script>
 </body>

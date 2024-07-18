@@ -1,7 +1,7 @@
 // Purpose: To handle the chatroom routes for the API
 // variables
 const router = require("express").Router();
-const { User, Chatroom, Message } = require("../../models");
+const { User, Chatroom, Message, Game } = require("../../models");
 const withAuth = require("../../utils/auth.js");
 
 // GET all chatrooms
@@ -20,8 +20,16 @@ router.get("/", async (req, res) => {
 // GET a chatroom by id
 // GET /api/chatrooms/:id
 // authentication required
-router.get("/:id", withAuth, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
+    const allGameData = await Game.findAll();
+    const games = allGameData.map((game) => game.get({ plain: true }));
+    const set = new Set();
+    while (set.size < 4) {
+      set.add(games[Math.floor(Math.random() * games.length)]);
+    }
+    const randomGames = Array.from(set);
+
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
     const chatroomData = await Chatroom.findByPk(req.params.id, {
@@ -44,10 +52,19 @@ router.get("/:id", withAuth, async (req, res) => {
     }
 
     // serialize the chatroom data
-    const chatroom = chatroom.get({ plain: true });
+    const chatroom = chatroomData.get({ plain: true });
+
+    // Send list of chatrooms
+    const chatRoomData = await Chatroom.findAll();
+    const chatRooms = chatRoomData.map((chatroom) =>
+      chatroom.get({ plain: true })
+    );
 
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
+      loggedIn: req.session.loggedIn,
+      randomGames,
+      chatRooms,
       // spread the chatroom data
       ...chatroom,
       // map over the messages and add the username to each message
@@ -58,7 +75,7 @@ router.get("/:id", withAuth, async (req, res) => {
         username: message.user.username,
       })),
       // add the user id to the chatroom data
-      user: req.session.user_id,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -68,7 +85,7 @@ router.get("/:id", withAuth, async (req, res) => {
 // POST a new chatroom
 // POST /api/chatrooms
 // authentication required
-router.post("/", withAuth, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     // create a new chatroom
     const newChatroom = await Chatroom.create({
@@ -87,7 +104,7 @@ router.post("/", withAuth, async (req, res) => {
 // PUT (update) a chatroom by id
 // PUT /api/chatrooms/:id
 // authentication required
-router.put("/:id", withAuth, async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     // update a chatroom by id
     const chatroom = await Chatroom.update(req.body, {

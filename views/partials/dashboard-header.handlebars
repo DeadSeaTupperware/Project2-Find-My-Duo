@@ -1,38 +1,77 @@
-<header
-  class="bg-gray-900 text-white py-4 px-8 flex items-center justify-between"
->
+<header class="bg-gray-900 text-white py-4 px-8 flex items-center justify-between">
   <!-- Logo as a Link with Division Bar -->
   <a href="/" class="flex items-center">
     <img src="/assets/images/FindMyDuo_Logo.png" alt="Logo" class="w-24 h-24 mr-4" />
-    <div class="h-16 w-0.5 bg-gray-600 mx-4"></div>
+    <div class="h-16 w-0.5 bg-gray-400 mx-4"></div>
     <!-- Division Bar -->
   </a>
 
   <!-- Navigation -->
-  <nav class="absolute top-4 right-8 flex items-center space-x-4">
-    <a href="/gameList" class="text-white hover:text-gray-400 px-4 py-2 border border-gray-300">View All</a>
-    {{> login_logout_button}}
+  <nav class="absolute top-4 right-4 flex items-center space-x-4">
+    <!-- Hamburger Menu for Mobile -->
+    <div class="md:hidden flex items-center">
+      <button id="hamburgerButton" class="text-white focus:outline-none">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <a href="/gameList" class="text-white font-bold hover:text-gray-400 px-4 py-2 border bg-gray-700 border-gray-300">View All</a>
+    {{>login_logout_button}}
     {{>signup_button}}
   </nav>
 
-  <!-- Secondary Text Links -->
-  <div
-    class="md:absolute md:right-8 md:top-16 md:flex md:items-center md:justify-between md:w-3/4 md:mr-20"
-  >
-
-
-    {{#each randomGames}}
-      <a href="/api/games/{{ id }}" class="flex items-center p-4 ">
-      <img src="{{ cover_art }}" alt="{{ title }}" class="h-8 w-auto mr-4">
-      <div>
-        <h2 class="text-sm font-bold">{{ title }}</h2>
-      </div>
-    </a>
-    {{/each}}
-
+  <!-- Game links: -->
+  <div id="gameLinks" class="md:absolute md:right-12 md:top-16 md:flex md:flex-col md:justify-center md:items-center md:w-3/4 md:mx-auto hidden md:block">
+    <h2 class="text-xl font-bold text-white mb-2">Game links:</h2>
+    <div class="flex justify-center items-center space-x-4">
+      {{#each randomGames}}
+        <a href="/api/games/{{ id }}" class="flex items-center p-4">
+          <img src="{{ cover_art }}" alt="{{ title }}" class="h-8 w-auto mr-4">
+          <div>
+            <h2 class="text-sm font-bold">{{ title }}</h2>
+          </div>
+        </a>
+      {{/each}}
+    </div>
   </div>
 
 </header>
 
+<!-- Hamburger Menu Content -->
+<div id="hamburgerMenu" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-90 z-50 md:hidden">
+  <div class="flex flex-col items-center justify-center h-full">
+    <button id="closeHamburgerMenu" class="absolute top-4 right-4 text-white focus:outline-none">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    <h2 class="text-xl font-bold text-white mb-4">Game Links:</h2>
+    <div class="flex flex-col items-center space-y-4">
+      {{#each randomGames}}
+      <a href="/api/games/{{ id }}" class="flex items-center p-4">
+        <img src="{{ cover_art }}" alt="{{ title }}" class="h-8 w-auto mr-4">
+        <div>
+          <h2 class="text-sm font-bold">{{ title }}</h2>
+        </div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</div>
 
+<script>
+  // Toggle Navbar visibility on mobile
+  const hamburgerButton = document.getElementById('hamburgerButton');
+  const hamburgerMenu = document.getElementById('hamburgerMenu');
+  const closeHamburgerMenu = document.getElementById('closeHamburgerMenu');
 
+  hamburgerButton.addEventListener('click', () => {
+    hamburgerMenu.classList.toggle('hidden');
+  });
+
+  closeHamburgerMenu.addEventListener('click', () => {
+    hamburgerMenu.classList.toggle('hidden');
+  });
+</script>

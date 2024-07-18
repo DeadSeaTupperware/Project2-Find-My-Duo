@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { Chatroom } = require("../models");
 const Game = require("../models/Game.js");
 const { Op } = require("sequelize");
 const withAuth = require("../utils/auth.js");
@@ -6,8 +7,11 @@ const withAuth = require("../utils/auth.js");
 // GET Popular games for homepage
 router.get("/", async (req, res) => {
   try {
-    const gameData = await Game.findAll();
+    const gameData = await Game.findAll({
+      limit: 4, // Limiting to fetch only four games
+    });
     const games = gameData.map((game) => game.get({ plain: true }));
+
     console.log(games);
     // Get popular games from DB and render homepage
     res.render("homepage", {
@@ -46,7 +50,7 @@ router.get("/chatboard", async (req, res) => {
     const gameData = await Game.findAll();
     const games = gameData.map((game) => game.get({ plain: true }));
     const set = new Set();
-    while (set.size < 2) {
+    while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
 
@@ -106,6 +110,7 @@ router.get("/chatboard/createChatroom/:id", async (req, res) => {
     console.log(game);
     res.render("create_chatroom", {
       game,
+      user_id: req.session.user_id,
     });
   } catch (err) {
     console.log(err);
@@ -125,18 +130,25 @@ router.get("/gameList/createGame/", async (req, res) => {
 
 router.get("/gameList", withAuth, async (req, res) => {
   try {
-    const gameData = await Game.findAll();
-    const games = gameData.map((game) => game.get({ plain: true }));
+    const allGameData = await Game.findAll();
+    const games = allGameData.map((game) => game.get({ plain: true }));
     const set = new Set();
     while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
-
     const randomGames = Array.from(set);
+
+    const chatRoomData = await Chatroom.findAll();
+    const chatRooms = chatRoomData.map((chatroom) =>
+      chatroom.get({ plain: true })
+    );
+
     res.render("gameList", {
       loggedIn: req.session.loggedIn,
       games,
+      user_id: req.session.user_id,
       randomGames,
+      chatRooms,
     });
   } catch (err) {
     console.log(err);
