@@ -105,7 +105,7 @@ io.on("connection", (socket) => {
       io.to(room_id).emit("chat_message", {
         sender_id: parsedSenderId,
         message_text: message_text,
-        message_timestamp: new Date(),
+        message_timestamp: new Date().toISOString(),
       });
     } catch (err) {
       // log any errors
