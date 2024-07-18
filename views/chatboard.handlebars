@@ -48,7 +48,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         {{#each chatRooms}}
                             {{#if (eq ../game.id game_id)}}
-                                <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="chatroom-link p-4 border border-gray-300 rounded-lg inline-block">
+                                <a href="/api/chatrooms/{{id}}" class="chatroom-link p-4 border border-gray-300 rounded-lg inline-block">
                                     <p class="text-center">{{chatroom_name}}</p>
                                 </a>
                             {{/if}}
