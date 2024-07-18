@@ -750,6 +750,14 @@ video {
   max-width: 24rem;
 }
 
+.max-w-screen-md {
+  max-width: 768px;
+}
+
+.max-w-screen-xl {
+  max-width: 1280px;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1061,6 +1069,10 @@ video {
 
   .md\:w-3\/4 {
     width: 75%;
+  }
+
+  .md\:w-1 {
+    width: 0.25rem;
   }
 
   .md\:grid-cols-2 {
