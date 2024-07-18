@@ -31,30 +31,30 @@ Chatroom.init(
       allowNull: false,
     },
     // chatroom password must be at least 8 characters long
-    chatroom_password: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: [8],
-      },
-    },
+    // chatroom_password: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    //   validate: {
+    //     len: [8],
+    //   },
+    // },
   },
   {
-    hooks: {
-      beforeCreate: async (newChatroom) => {
-        // hash the password before creating a new chatroom
-        try {
-          newChatroom.chatroom_password = await bcrypt.hash(
-            newChatroom.chatroom_password,
-            10
-          );
-          return newChatroom;
-        } catch (err) {
-          console.log(err);
-          return err;
-        }
-      },
-    },
+    // hooks: {
+    //   beforeCreate: async (newChatroom) => {
+    //     // hash the password before creating a new chatroom
+    //     try {
+    //       newChatroom.chatroom_password = await bcrypt.hash(
+    //         newChatroom.chatroom_password,
+    //         10
+    //       );
+    //       return newChatroom;
+    //     } catch (err) {
+    //       console.log(err);
+    //       return err;
+    //     }
+    //   },
+    // },
     sequelize,
     timestamps: false,
     freezeTableName: true,

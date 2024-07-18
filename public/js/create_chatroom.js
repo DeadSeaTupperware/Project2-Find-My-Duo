@@ -3,9 +3,6 @@ const createChatFormHandler = async (event) => {
 
   const gameId = game.id;
   const chatroomName = document.querySelector("#chatroom-name").value.trim();
-  const chatroomPassword = document
-    .querySelector("#chatroom-password")
-    .value.trim();
 
   if (gameId && chatroomName) {
     const response = await fetch("/api/chatrooms", {
