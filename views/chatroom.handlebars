@@ -42,7 +42,7 @@
                     {{!-- timestamp - sender: message --}}
                     {{#each messages}}
                     <div class="text-white p-2 bg-gray-600 mb-2 rounded">
-                        {{this.message_timestamp}} - {{this.sender_id}}: {{this.message_text}}
+                        {{this.message_timestamp}} - {{this.username}}: {{this.message_text}}
                     </div>
                     {{/each}}
                 </div>
@@ -123,6 +123,9 @@ if (isNaN(userID)) {
                 message_text: messageText,
                 message_timestamp: new Date().toISOString()
             });
+
+            // Refresh the page after sending the message
+            window.location.reload(); // Reload the page
         }
 
         // format timestamp
