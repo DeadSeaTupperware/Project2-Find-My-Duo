@@ -6,8 +6,11 @@ const withAuth = require("../utils/auth.js");
 // GET Popular games for homepage
 router.get("/", async (req, res) => {
   try {
-    const gameData = await Game.findAll();
+    const gameData = await Game.findAll({
+      limit: 4, // Limiting to fetch only four games
+    });
     const games = gameData.map((game) => game.get({ plain: true }));
+
     console.log(games);
     // Get popular games from DB and render homepage
     res.render("homepage", {
@@ -46,7 +49,7 @@ router.get("/chatboard", async (req, res) => {
     const gameData = await Game.findAll();
     const games = gameData.map((game) => game.get({ plain: true }));
     const set = new Set();
-    while (set.size < 2) {
+    while (set.size < 4) {
       set.add(games[Math.floor(Math.random() * games.length)]);
     }
 
