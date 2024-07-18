@@ -3,38 +3,37 @@
 <!-- Toggle Chat Button -->
 {{#if loggedIn}}
 <button id="toggleChat"
-    class="ml-4 text-white px-4 py-2 border border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
+    class="ml-4 text-white px-4 py-2 border bg-gray-700 border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
     <span id="toggleIcon" class="font-bold">View Chat</span>
 </button>
 {{/if}}
 
 <body class="bg-gray-100">
-    <div class="flex gap-4 p-4">
+    <div class="flex flex-col md:flex-row gap-4 p-4">
         <!-- Chatroom Section -->
-        <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+        <div id="chatSection" class="w-full md:w-1/5 h-80 md:h-screen bg-gray-800 border border-gray-300 p-4 md:overflow-hidden">
             <!-- Chatroom List -->
-            <div id="chatroomList" class="overflow-y-auto">
+            <div id="chatroomList" class="overflow-y-auto h-full">
                 {{!-- dynamic chatroom list will appear here --}}
             </div>
         </div>
 
         <!-- Main Content Section -->
-        <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4 relative"
-            style="height: 80vh">
+        <div id="mainSection" class="flex-1 h-auto md:h-screen bg-gray-800 border border-gray-300 p-4 relative">
             <!-- Main Content Goes Here -->
             <h2 class="text-2xl font-bold text-white mb-4">Popular Titles:</h2>
-            <div class="overflow-y-auto h-5/6 pb-16">
+            <div class="overflow-y-auto h-full pb-16">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {{#each games}}
                     <a href="/api/games/{{ id }}"
-                        class="block border border-gray-300 p-4 rounded-lg transition duration-300 hover:bg-gray-100">
-                        <div class="flex items-center">
+                        class="block border bg-gray-900 border-gray-300 p-4 rounded-lg transition duration-300 hover:bg-gray-500">
+                        <div class="flex items-center mb-4">
                             <img src="{{ cover_art }}" alt="{{ title }}" class="h-24 w-auto mr-4">
                             <div>
-                                <h2 class="text-xl font-bold mb-1">{{ title }}</h2>
-                                <p class="text-l text-gray-200">{{ description }}</p>
+                                <h2 class="text-xl font-bold">{{ title }}</h2>
                             </div>
                         </div>
+                        <p class="text-l text-gray-200">{{ description }}</p>
                     </a>
                     {{/each}}
                 </div>
@@ -42,7 +41,7 @@
 
             <!-- New Game Button -->
             <a href="/gameList/createGame" id="linkBox"
-                class="text-white px-4 py-2 border border-gray-300 bg-gray-800 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-4">
+                class="text-white px-4 py-2 border border-gray-300 bg-gray-700 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-4">
                 <span id="linkText" class="font-bold">New Game</span>
             </a>
         </div>
@@ -52,7 +51,6 @@
 <script>
     // JavaScript to toggle chatroom visibility
     const toggleChatButton = document.getElementById('toggleChat');
-    //const chatContent = document.getElementById('chatContent');
     const chatSection = document.getElementById('chatSection');
     const mainSection = document.getElementById('mainSection');
 
@@ -61,18 +59,16 @@
 
     // Toggle button click event
     toggleChatButton.addEventListener('click', () => {
-        //chatContent.classList.toggle('hidden');
-
         if (!chatSection.classList.contains('hidden')) {
             // If chat is hidden, expand main section to full width
-            chatSection.classList.remove('w-1/5');
+            chatSection.classList.remove('md:w-1/5');
             chatSection.classList.add('hidden');
             mainSection.classList.remove('flex-1');
             mainSection.classList.add('w-full');
             toggleIcon.textContent = 'View Chat';
         } else {
             // If chat is shown, revert to original sizes
-            chatSection.classList.add('w-1/5');
+            chatSection.classList.add('md:w-1/5');
             chatSection.classList.remove('hidden');
             mainSection.classList.add('flex-1');
             mainSection.classList.remove('w-full');
