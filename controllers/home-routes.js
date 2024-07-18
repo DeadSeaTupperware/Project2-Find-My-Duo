@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const Game = require("../models/Game.js");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 
 // GET Popular games for homepage
 router.get("/", async (req, res) => {
   try {
     const gameData = await Game.findAll();
-    const games = gameData.map(game => game.get({plain: true}))
-    console.log(games)
+    const games = gameData.map((game) => game.get({ plain: true }));
+    console.log(games);
     // Get popular games from DB and render homepage
     res.render("homepage", {
       loggedIn: req.session.loggedIn,
@@ -131,23 +131,22 @@ router.get("/gameList", async (req, res) => {
 });
 
 // Search for games
-router.get('/search', async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
-      const searchQuery = req.query.q;
-      const gamesData = await Game.findAll({
-          where: {
-              title: {
-                  [Op.like]: `%${searchQuery}%`,
-              },
-          },
-      });
-      const games = gamesData.map(game => game.get({plain: true}));
-      res.render('searchResults', { games, searchQuery });
+    const searchQuery = req.query.q;
+    const gamesData = await Game.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${searchQuery}%`,
+        },
+      },
+    });
+    const games = gamesData.map((game) => game.get({ plain: true }));
+    res.render("searchResults", { games, searchQuery });
   } catch (error) {
-    console.log(error)
-      res.status(500).json({ error: 'Failed to search games' });
+    console.log(error);
+    res.status(500).json({ error: "Failed to search games" });
   }
 });
-
 
 module.exports = router;
