@@ -6,64 +6,53 @@
 <a href="/gameList">View all gameList</a> }}
 
 <!-- Header -->
-<header
-  class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center"
->
+<header class="bg-gray-900 text-white py-4 px-6 flex justify-between items-center">
   <div></div>
   <!-- This empty div is a placeholder to align the header content to the right -->
-  <div>
+  <div class="mt-4">
     {{!-- <a href="/login" class="mr-4">Login</a> --}}
-    {{> login_logout_button }}
+    {{>login_logout_button}}
     {{>signup_button}}
   </div>
 </header>
 
 <!-- Body -->
-<div class="container mx-auto mt-8">
+<div class="container mx-auto mt-8 px-8 mb-8">
   <div class="flex flex-col items-center">
     <!-- Logo Section (Centered) -->
-    <img src="/assets/images/FindMyDuo_Logo.png" alt="Logo" class="w-96 w-96 mb-16" />
+    <img src="/assets/images/FindMyDuo_Logo.png" alt="Logo" class="w-96 mb-16" />
 
     <!-- Search Section -->
-   <div class="max-w-screen-xl mx-auto w-80vh flex items-center justify-between text-black mb-16">
-    <form id="search-form" class="flex items-center" style="width: 80vh">
+    <div class="max-w-screen-xl mx-auto w-full flex flex-col md:flex-row justify-center items-center text-black mb-16">
+      <form id="search-form" class="flex items-center w-full md:w-4/5 mb-4 md:mb-0">
         <input
-            class="flex-1 md:flex-2 border-gray-300 border-solid border-2 p-2 rounded-lg mr-2"
-            type="text"
-            name="q"
-            placeholder="Search..."
-            id="search-input"
+          class="flex-grow border-gray-300 border-solid border-2 p-2 rounded-lg mr-2"
+          type="text"
+          name="q"
+          placeholder="Search..."
+          id="search-input"
         />
         <button
-            type="submit"
-            class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
+          type="submit"
+          class="bg-gray-700 text-white font-bold px-4 py-2 rounded-lg ml-2 mr-2 border border-gray-300"
         >Search</button>
         <a
-            href="/gameList"
-            class="bg-gray-900 text-white px-4 py-2 rounded-lg ml-2 border border-gray-300"
-        >View All</a>
-    </form>
-    <script src="/js/search.js"></script>
-</div>
-
-</div>
-
-
-
-
-    <!-- Directlink Section -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
-
-      {{#each games}}
-
-      <a href="/api/games/{{this.id}}" class="bg-gray-900 p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
-        <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
-        <span class="text-center text-sm">{{this.title}}</span>
-      </a>
-
-      {{/each}}
-
+        href="/gameList"
+        class="bg-gray-700 text-white font-bold px-4 py-2 rounded-lg border border-gray-300"
+      >View All</a>
+      </form>
     </div>
+
+  <h2 class="text-2xl font-bold text-white">Popular Titles:</h2>
+  <!-- Directlink Section -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mt-4">
+
+    {{#each games}}
+    <a href="/api/games/{{this.id}}" class="bg-gray-700 border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
+      <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
+      <span class="text-center font-bold text-sm">{{this.title}}</span>
+    </a>
+    {{/each}}
 
   </div>
 

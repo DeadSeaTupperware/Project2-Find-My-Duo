@@ -1,21 +1,19 @@
 {{> dashboard-header }}
 
- <!-- Toggle Chat Button -->
- {{#if loggedIn}}
-     <button id="toggleChat"
-        class="ml-4 text-white px-4 py-2 border border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
-        <span id="toggleIcon" class="mr-2">View Chat</span>
-    </button>
+<!-- Toggle Chat Button -->
+{{#if loggedIn}}
+<button id="toggleChat"
+    class="ml-4 text-white px-4 py-2 border bg-gray-700 border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out">
+    <span id="toggleIcon" class="font-bold">View Chat</span>
+</button>
 {{/if}}
 
-
-<body class="bg-gray-100" >
-  
-    <div class="flex gap-4 p-4">
+<body class="bg-gray-100">
+    <div class="flex flex-col md:flex-row gap-4 p-4">
         <!-- Chatroom Section -->
-        <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+        <div id="chatSection" class="w-full md:w-1/5 h-80 md:h-screen bg-gray-800 border border-gray-300 p-4 md:overflow-hidden">
             <!-- Chatroom List -->
-            <div id="chatroomList" class="overflow-y-auto">
+            <div id="chatroomList" class="overflow-y-auto h-full">
                 {{!-- dynamic chatroom list will appear here --}}
                 {{#each chatRooms}}
                     {{#if (eqParticipant ../user_id chatroom_participant)}}
@@ -28,12 +26,12 @@
                     {{/if}}
                 {{/each}}
             </div>
-                
         </div>
 
         <!-- Main Content Section -->
-        <div id="mainSection" class="flex-1 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
+        <div id="mainSection" class="flex-1 h-auto md:h-screen bg-gray-800 border border-gray-300 p-4 relative">
             <!-- Main Content Goes Here -->
+
             <div id="chatContent" class="h-full overflow-y-auto  p-4" >
 
                
@@ -56,61 +54,44 @@
                     </div>
             </div>
 
-            
-
-               
             </div>
 
             <!-- link to find your duo -->
-
-
             {{#if loggedIn}}
-                <a href="/chatboard/createChatroom/{{game.id}}" id="linkBox"
-                class="text-white px-4 py-2 border border-gray-300 bg-gray-800 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-8">
-                <span id="linkText">Find your Duo</span>
+            <a href="/chatboard/createChatroom/{{game.id}}" id="linkBox"
+                class="text-white px-4 py-2 border border-gray-300 bg-gray-700 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out absolute bottom-4 right-4">
+                <span id="linkText" class="font-bold">Create Chatroom</span>
             </a>
             {{/if}}
-
-
-            
         </div>
     </div>
+</body>
 
+<script>
+    // JavaScript to toggle chatroom visibility
+    const toggleChatButton = document.getElementById('toggleChat');
+    const chatSection = document.getElementById('chatSection');
+    const mainSection = document.getElementById('mainSection');
 
-   
-    <script>
-         // JavaScript to toggle chatroom visibility
-        const toggleChatButton = document.getElementById('toggleChat');
-        //const chatContent = document.getElementById('chatContent');
-        const chatSection = document.getElementById('chatSection');
-        const mainSection = document.getElementById('mainSection');
+    // Hide chatroom content by default
+    chatSection.classList.add('hidden');
 
-        // Hide chatroom content by default
-        chatSection.classList.add('hidden');
-
-        // Toggle button click event
-        toggleChatButton.addEventListener('click', () => {
-            //chatContent.classList.toggle('hidden');
-
-            if (!chatSection.classList.contains('hidden')) {
-                // If chat is hidden, expand main section to full width
-                chatSection.classList.remove('w-1/5');
-                chatSection.classList.add('hidden');
-                mainSection.classList.remove('flex-1');
-                mainSection.classList.add('w-full');
-                toggleIcon.textContent = 'View Chat';
-            } else {
-                // If chat is shown, revert to original sizes
-                chatSection.classList.add('w-1/5');
-                chatSection.classList.remove('hidden');
-                mainSection.classList.add('flex-1');
-                mainSection.classList.remove('w-full');
-                toggleIcon.textContent = 'Hide Chat';
-            }
-        });
-
-       
-    
-    </script>
-
-
+    // Toggle button click event
+    toggleChatButton.addEventListener('click', () => {
+        if (!chatSection.classList.contains('hidden')) {
+            // If chat is hidden, expand main section to full width
+            chatSection.classList.remove('md:w-1/5');
+            chatSection.classList.add('hidden');
+            mainSection.classList.remove('flex-1');
+            mainSection.classList.add('w-full');
+            toggleIcon.textContent = 'View Chat';
+        } else {
+            // If chat is shown, revert to original sizes
+            chatSection.classList.add('md:w-1/5');
+            chatSection.classList.remove('hidden');
+            mainSection.classList.add('flex-1');
+            mainSection.classList.remove('w-full');
+            toggleIcon.textContent = 'Hide Chat';
+        }
+    });
+</script>
