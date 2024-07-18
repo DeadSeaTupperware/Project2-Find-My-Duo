@@ -1,13 +1,27 @@
 const createChatFormHandler = async (event) => {
   event.preventDefault();
 
-  const gameId = game.id;
-  const chatroomName = document.querySelector("#chatroom-name").value.trim();
+  const chatroom_name = document.querySelector("#chatroom-name").value.trim();
 
-  if (gameId && chatroomName) {
+  // Get the current URL
+  const currentUrl = window.location.href;
+
+  // Extract the part of the URL after the last '/'
+  const parts = currentUrl.split("/");
+  const lastPart = parts[parts.length - 1];
+
+  // Convert the extracted string to a number
+  const game_id = parseInt(lastPart);
+
+  // Access the user's ID from the HTML template
+  const user_id = document.querySelector("#user-id").value;
+
+  const chatroom_participant = [user_id];
+
+  if (chatroom_name && game_id && chatroom_participant) {
     const response = await fetch("/api/chatrooms", {
       method: "POST",
-      body: JSON.stringify({ gameId, chatroomName, chatroomPassword }),
+      body: JSON.stringify({ chatroom_name, game_id, chatroom_participant }),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -16,6 +30,8 @@ const createChatFormHandler = async (event) => {
     } else {
       alert(response.statusText);
       console.log(response.status);
+      console.log(user_id);
+      return user_id;
     }
   }
 };

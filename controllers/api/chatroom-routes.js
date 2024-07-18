@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 // GET a chatroom by id
 // GET /api/chatrooms/:id
 // authentication required
-router.get("/:id", withAuth, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     // Purpose: render dynamic chatroom page
     // get chatroom data by id
@@ -68,7 +68,7 @@ router.get("/:id", withAuth, async (req, res) => {
 // POST a new chatroom
 // POST /api/chatrooms
 // authentication required
-router.post("/", withAuth, async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     // create a new chatroom
     const newChatroom = await Chatroom.create({
@@ -87,7 +87,7 @@ router.post("/", withAuth, async (req, res) => {
 // PUT (update) a chatroom by id
 // PUT /api/chatrooms/:id
 // authentication required
-router.put("/:id", withAuth, async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     // update a chatroom by id
     const chatroom = await Chatroom.update(req.body, {
