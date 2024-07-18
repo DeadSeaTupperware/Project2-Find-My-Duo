@@ -54,10 +54,17 @@ router.get("/:id", async (req, res) => {
     // serialize the chatroom data
     const chatroom = chatroomData.get({ plain: true });
 
+    // Send list of chatrooms
+    const chatRoomData = await Chatroom.findAll();
+    const chatRooms = chatRoomData.map((chatroom) =>
+      chatroom.get({ plain: true })
+    );
+
     // render the chatroom page with the chatroom data
     res.render("chatroom", {
       loggedIn: req.session.loggedIn,
       randomGames,
+      chatRooms,
       // spread the chatroom data
       ...chatroom,
       // map over the messages and add the username to each message

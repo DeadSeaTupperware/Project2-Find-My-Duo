@@ -14,13 +14,15 @@
         <!-- Chatroom Section -->
         <div id="chatSection" class="w-1/5 h-screen bg-gray-800 border border-gray-300 p-4" style="height: 80vh">
             <!-- Chatroom List -->
-            <div id="chatroomList" class="overflow-y-auto">
+             <div id="chatroomList" class="overflow-y-auto h-full">
+                <h2 class="text-2xl font-bold text-white mb-4">Your chatrooms:</h2>
                 {{!-- dynamic chatroom list will appear here --}}
                 {{#each chatRooms}}
                     {{#if (eqParticipant ../user_id chatroom_participant)}}
                         <div class="flex justify-center">
-                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 px-4 py-2 m-2 border border-gray-300 rounded-lg text-center">
-                                <p>{{chatroom_name}}</p>
+                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
+                                <p class="font-bold">{{chatroom_name}}</p>
+                                <p class="text-sm text-gray-400">{{lookup ../games (subtract game_id 1) "title"}}</p>
                             </a>
                         </div>
                     {{/if}}
