@@ -7,7 +7,7 @@ const withAuth = require("../../utils/auth.js");
 // GET all chatrooms
 // GET /api/chatrooms
 // authentication required
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     // get all chatroom data
     const chatroomData = await Chatroom.findAll();
