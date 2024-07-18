@@ -620,6 +620,10 @@ video {
   top: 1rem;
 }
 
+.right-8 {
+  right: 2rem;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1085,6 +1089,11 @@ video {
 .hover\:text-gray-800:hover {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
+.focus\:border-blue-500:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
 }
 
 .focus\:border-blue-900:focus {

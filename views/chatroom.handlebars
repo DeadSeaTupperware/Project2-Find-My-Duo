@@ -20,7 +20,7 @@
                 {{#each chatRooms}}
                     {{#if (eqParticipant ../user_id chatroom_participant)}}
                         <div class="flex justify-center">
-                            <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
+                            <a href="/api/chatrooms/{{id}}" class="block w-full max-w-xs p-4 py-2 m-2 bg-gray-900 border border-gray-300 rounded-lg transition duration-300 hover:bg-gray-500">
                                 <p class="font-bold">{{chatroom_name}}</p>
                             </a>
                         </div>
