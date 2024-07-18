@@ -48,7 +48,7 @@
   <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mt-4">
 
     {{#each games}}
-    <a href="/api/games/{{this.id}}" class="bg-gray-700 border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
+    <a href="/api/games/{{this.id}}" class="bg-gray-700 border border-gray-300 hover:bg-gray-200 hover:text-gray-800 transition duration-300 ease-in-out p-2 shadow-md rounded-lg flex flex-col items-center justify-center">
       <img src="{{this.cover_art}}" alt="Image of {{this.title}}" class="w-16 h-16 object-cover mb-2" />
       <span class="text-center font-bold text-sm">{{this.title}}</span>
     </a>

@@ -11,10 +11,23 @@
 <body class="bg-gray-100">
     <div class="flex flex-col md:flex-row gap-4 p-4">
         <!-- Chatroom Section -->
-        <div id="chatSection" class="w-full md:w-1/5 h-80 md:h-screen bg-gray-800 border border-gray-300 p-4 md:overflow-hidden">
+        <div id="chatSection" class="w-full md:w-1/5 h-80 md:h-screen bg-gray-800 border border-gray-300 p-4 md:overflow-hidden hidden">
             <!-- Chatroom List -->
             <div id="chatroomList" class="overflow-y-auto h-full">
+                <h2 class="text-2xl font-bold text-white mb-4">Your chatrooms:</h2>
                 {{!-- dynamic chatroom list will appear here --}}
+                {{#each chatroomData}}
+                    {{#if (includes ../currentUser.id this.chatroom_participant)}}
+                    <div class="border bg-gray-900 border-gray-300 p-4 rounded-lg mb-4">
+                        <h3 class="text-lg font-bold text-white">{{ this.chatroom_name }}</h3>
+                        {{#each ../games}}
+                            {{#if (equals this.id ../this.game_id)}}
+                            <p class="text-sm text-gray-400">{{ this.title }}</p>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                {{/each}}
             </div>
         </div>
 
@@ -53,6 +66,7 @@
     const toggleChatButton = document.getElementById('toggleChat');
     const chatSection = document.getElementById('chatSection');
     const mainSection = document.getElementById('mainSection');
+    const toggleIcon = document.getElementById('toggleIcon');
 
     // Hide chatroom content by default
     chatSection.classList.add('hidden');
@@ -61,17 +75,15 @@
     toggleChatButton.addEventListener('click', () => {
         if (!chatSection.classList.contains('hidden')) {
             // If chat is hidden, expand main section to full width
-            chatSection.classList.remove('md:w-1/5');
             chatSection.classList.add('hidden');
             mainSection.classList.remove('flex-1');
             mainSection.classList.add('w-full');
             toggleIcon.textContent = 'View Chat';
         } else {
             // If chat is shown, revert to original sizes
-            chatSection.classList.add('md:w-1/5');
             chatSection.classList.remove('hidden');
-            mainSection.classList.add('flex-1');
             mainSection.classList.remove('w-full');
+            mainSection.classList.add('flex-1');
             toggleIcon.textContent = 'Hide Chat';
         }
     });

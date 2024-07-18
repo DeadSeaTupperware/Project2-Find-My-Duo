@@ -23,6 +23,16 @@ const hbs = exphbs.create({
   // partialsDir: [path.join(__dirname, "views/partials")],
 });
 
+// Register custom Handlebars helpers
+const Handlebars = require("handlebars");
+Handlebars.registerHelper("includes", function (array, value) {
+  return array.includes(value);
+});
+
+Handlebars.registerHelper("equals", function (a, b) {
+  return a === b;
+});
+
 const sess = {
   secret: "Super secret secret",
   cookie: {
@@ -51,7 +61,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`Now listening at port ${PORT}`));
+  server.listen(PORT, () => console.log(`Now listening at port ${PORT}`));
 });
 
 // set up for Socket.io
