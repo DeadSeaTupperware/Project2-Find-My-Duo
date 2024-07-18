@@ -41,6 +41,7 @@ router.get("/:id", withAuth, async (req, res) => {
     res.render("chatboard", {
       games,
       loggedIn: req.session.loggedIn,
+      user_id: req.session.user_id,
       game,
       randomGames,
       chatRooms,

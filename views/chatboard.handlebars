@@ -18,7 +18,7 @@
             <div id="chatroomList" class="overflow-y-auto">
                 {{!-- dynamic chatroom list will appear here --}}
                 {{#each chatRooms}}
-                    {{#if (eq ../game.id game_id)}}
+                    {{#if (eqParticipant ../user_id chatroom_participant)}}
                         <div class="flex justify-center">
                             <a href="/chatboard/{{../game.id}}/chatroom/{{id}}" class="block w-full max-w-xs p-4 px-4 py-2 m-2 border border-gray-300 rounded-lg text-center">
                                 <p>{{chatroom_name}}</p>
@@ -112,4 +112,5 @@
        
     
     </script>
+
 
