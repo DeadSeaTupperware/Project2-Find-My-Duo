@@ -6,27 +6,130 @@ Find My Duo is a web application designed to help gamers find and connect with o
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [File Structure](#file-structure)
+- [License](#license)
+- [Features](#features)
+- [Mock-Up](#mock-up)
+- [Learning Outcomes](#learning-outcomes)
 - [Usage](#usage)
 - [Credits](#credits)
-- [License](#license)
 
-## Installation
+## File Structure
 
-N/A
+```md
+Find My Duo/
+├── config/
+│ └── connection.js
+├── controllers/
+│ ├── api/
+│ │ ├── chatboard-routes.js
+│ │ └── game-routes.js
+│ ├── home-routes.js
+│ └── index.js
+├── db/
+│ └── schema.sql
+├── models/
+│ ├── Chatroom.js
+│ ├── Game.js
+│ └── index.js
+├── public/
+│ ├── assets/
+│ ├── css/
+│ ├── js/
+├── seeds/
+│ ├── -Data.json
+│ └── seed.js
+├── utils/
+│ ├── auth.js
+| └── helpers.js
+├── views/
+│ ├── layouts/
+│ │ └── -handlebars
+│ ├── partials/
+│ │ └── -handlebars
+│ ├── -handlebars
+└── server.js
+```
 
-## Usage
+### License
+
+MIT License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Features
+
+- Search for games by title
+- View a list of all games
+- Join chatrooms for specific games
+- Participate in chatrooms in real-time
+
+## Mock-Up
+
+### Deployed Application
 
 [Render Deployment](https://project2-find-my-duo.onrender.com/)
 
+### Homepage
+
+![Homepage](public/assets/images/homepage.png)
+
+### Sign-Up
+
+![Sign-Up](public/assets/images/signup.png)
+
+### Game List
+
+![Game List](public/assets/images/game-lists.png)
+
+### Create Chatroom
+
+![Create Chatroom](public/assets/images/create-chatroom.gif)
+
+## Usage
+
 [GitHub Repo](https://github.com/DeadSeaTupperware/Project2-Find-My-Duo)
 
-- Home Page: The home page displays a search bar and links to view all games and individual game chatboards.
-- Search: Use the search bar to find games in the database by title.
-- Game List: View a list of all games by navigating to the game list page.
-- Chatboard: Click on a game to view its chatboard and join the conversation.
+Clone the repository
 
-![Homepage screenshot](public/assets/images/Screenshot%202024-07-18%20101206.png)
+```bash
+git clone
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Create a `.env` file in the root directory and add the following code
+
+```bash
+DB_NAME='find my duo_db'
+DB_USER='root'
+DB_PW='your password'
+```
+
+Create the database
+
+```bash
+psql -U postgres
+\i schema.db
+```
+
+Seed the database
+
+```bash
+npm run seed
+```
+
+Start the server
+
+```bash
+npm start
+```
+
+Navigate to `localhost:3001` in your browser
 
 ## Credits
 
@@ -34,7 +137,3 @@ N/A
 - Jacques Flores [GitHub](https://github.com/Jakostein97)
 - Jongho Bae [GitHub](https://github.com/jonghoBae0218)
 - Jose Falcon [GitHub](https://github.com/josefalconGH)
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more information.
